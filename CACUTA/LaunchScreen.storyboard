@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CA College University Transfer App" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cRN-kQ-hog">
+                                <rect key="frame" x="20" y="324" width="280" height="45.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="art-CV-vF6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-BoldItalic" family="Helvetica Neue" pointSize="19"/>
+                                <color key="textColor" red="1" green="0.49803921569999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="art-CV-vF6"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="xdv-LB-BtJ">
+                                <rect key="frame" x="36" y="60" width="248" height="248"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="xdv-LB-BtJ" secondAttribute="height" multiplier="1:1" id="m61-a4-JNp"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xdv-LB-BtJ" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="40" id="4fy-p5-VB8"/>
+                            <constraint firstItem="cRN-kQ-hog" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8HJ-TU-OMW"/>
+                            <constraint firstItem="xdv-LB-BtJ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="931-zQ-yhu"/>
+                            <constraint firstItem="cRN-kQ-hog" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="MBx-Ec-Tw5"/>
+                            <constraint firstItem="cRN-kQ-hog" firstAttribute="centerX" secondItem="xdv-LB-BtJ" secondAttribute="centerX" id="cAi-Y8-mfn"/>
+                            <constraint firstAttribute="trailing" secondItem="cRN-kQ-hog" secondAttribute="trailing" constant="20" id="cqX-gH-6jc"/>
+                            <constraint firstItem="cRN-kQ-hog" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kwh-8T-PKy"/>
+                            <constraint firstItem="cRN-kQ-hog" firstAttribute="top" secondItem="xdv-LB-BtJ" secondAttribute="bottom" constant="16" id="uJ3-Kb-nwg"/>
+                            <constraint firstItem="cRN-kQ-hog" firstAttribute="width" secondItem="xdv-LB-BtJ" secondAttribute="width" constant="-81" id="v2A-vl-489"/>
+                            <constraint firstItem="xdv-LB-BtJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="wRE-Qg-b3z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xdv-LB-BtJ" secondAttribute="trailing" constant="20" id="zuo-f8-fjY"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="wRE-Qg-b3z"/>
+                                <exclude reference="kwh-8T-PKy"/>
+                                <exclude reference="v2A-vl-489"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo" width="981" height="708"/>
+    </resources>
+</document>

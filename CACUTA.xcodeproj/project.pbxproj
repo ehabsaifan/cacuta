@@ -7,13 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE4776F21D178D0A00F4255A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4776F11D178D0A00F4255A /* AppDelegate.swift */; };
-		CE4776F41D178D0A00F4255A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4776F31D178D0A00F4255A /* ViewController.swift */; };
-		CE4776F71D178D0A00F4255A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4776F51D178D0A00F4255A /* Main.storyboard */; };
-		CE4776F91D178D0A00F4255A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4776F81D178D0A00F4255A /* Assets.xcassets */; };
-		CE4776FC1D178D0A00F4255A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4776FA1D178D0A00F4255A /* LaunchScreen.storyboard */; };
+		A44482C854FC8973830965D3 /* Pods_CACUTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A76EDB6519A41099B61FD7C /* Pods_CACUTA.framework */; };
 		CE4777071D178D0A00F4255A /* CACUTATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777061D178D0A00F4255A /* CACUTATests.swift */; };
 		CE4777121D178D0A00F4255A /* CACUTAUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777111D178D0A00F4255A /* CACUTAUITests.swift */; };
+		CE47773E1D178E3100F4255A /* AboutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777201D178E3100F4255A /* AboutTableViewController.swift */; };
+		CE47773F1D178E3100F4255A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777211D178E3100F4255A /* AppDelegate.swift */; };
+		CE4777401D178E3100F4255A /* AreasList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE4777221D178E3100F4255A /* AreasList.csv */; };
+		CE4777411D178E3100F4255A /* AreasTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777231D178E3100F4255A /* AreasTableViewCell.swift */; };
+		CE4777421D178E3100F4255A /* AreasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777241D178E3100F4255A /* AreasTableViewController.swift */; };
+		CE4777431D178E3100F4255A /* AreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777251D178E3100F4255A /* AreaViewController.swift */; };
+		CE4777461D178E3100F4255A /* CACUTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE4777281D178E3100F4255A /* CACUTA.xcdatamodeld */; };
+		CE4777471D178E3100F4255A /* ClassesList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE47772A1D178E3100F4255A /* ClassesList.csv */; };
+		CE4777481D178E3100F4255A /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772B1D178E3100F4255A /* constants.swift */; };
+		CE4777491D178E3100F4255A /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772C1D178E3100F4255A /* CourseDetailsViewController.swift */; };
+		CE47774A1D178E3100F4255A /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772D1D178E3100F4255A /* DataBaseManager.swift */; };
+		CE47774B1D178E3100F4255A /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772E1D178E3100F4255A /* DataSourceManager.swift */; };
+		CE47774C1D178E3100F4255A /* DisplayCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772F1D178E3100F4255A /* DisplayCoursesViewController.swift */; };
+		CE47774D1D178E3100F4255A /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777301D178E3100F4255A /* EditProfileViewController.swift */; };
+		CE47774E1D178E3100F4255A /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777311D178E3100F4255A /* extentions.swift */; };
+		CE47774F1D178E3100F4255A /* FavoriteCoursesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777321D178E3100F4255A /* FavoriteCoursesTableViewController.swift */; };
+		CE4777501D178E3100F4255A /* FavoriteCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777331D178E3100F4255A /* FavoriteCourseTableViewCell.swift */; };
+		CE4777511D178E3100F4255A /* helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777341D178E3100F4255A /* helpers.swift */; };
+		CE4777521D178E3100F4255A /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777351D178E3100F4255A /* ImagePickerManager.swift */; };
+		CE4777531D178E3100F4255A /* ListTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777361D178E3100F4255A /* ListTableTableViewController.swift */; };
+		CE4777541D178E3100F4255A /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777371D178E3100F4255A /* MoreTableViewController.swift */; };
+		CE4777551D178E3100F4255A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777381D178E3100F4255A /* ProfileViewController.swift */; };
+		CE4777561D178E3100F4255A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777391D178E3100F4255A /* SearchViewController.swift */; };
+		CE4777571D178E3100F4255A /* UniversitiesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47773A1D178E3100F4255A /* UniversitiesCollectionViewController.swift */; };
+		CE4777581D178E3100F4255A /* UniversitiesList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE47773B1D178E3100F4255A /* UniversitiesList.csv */; };
+		CE4777591D178E3100F4255A /* UniversityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47773C1D178E3100F4255A /* UniversityCollectionViewCell.swift */; };
+		CE47775A1D178E3100F4255A /* UniversityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47773D1D178E3100F4255A /* UniversityTableViewController.swift */; };
+		CE47775E1D178EBE00F4255A /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = CE47775D1D178EBE00F4255A /* Base.lproj */; };
+		CE4777631D178F6E00F4255A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4777621D178F6E00F4255A /* Main.storyboard */; };
+		CE4777751D17D2EB00F4255A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4777741D17D2EB00F4255A /* LaunchScreen.storyboard */; };
+		CE4777771D17D60400F4255A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4777761D17D60400F4255A /* Assets.xcassets */; };
+		CE70262D1D205E72004B572C /* AnnouncementsDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70262C1D205E72004B572C /* AnnouncementsDisplayViewController.swift */; };
+		CE70262F1D205FE7004B572C /* PublicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70262E1D205FE7004B572C /* PublicTableViewController.swift */; };
+		CE7026311D205FF6004B572C /* LocalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7026301D205FF6004B572C /* LocalTableViewController.swift */; };
+		CE7026331D207480004B572C /* AnnouncmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7026321D207480004B572C /* AnnouncmentViewController.swift */; };
+		CE7026351D2078E3004B572C /* SavedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7026341D2078E3004B572C /* SavedTableViewController.swift */; };
+		CE7CC5891D186610001A8BDE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5881D186610001A8BDE /* SignUpViewController.swift */; };
+		CE7CC58C1D18A60D001A8BDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC58B1D18A60D001A8BDE /* User.swift */; };
+		CE7CC58F1D18A8A7001A8BDE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC58E1D18A8A7001A8BDE /* TabBarViewController.swift */; };
+		CE7CC5911D18BD55001A8BDE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */; };
+		CE7CC5931D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */; };
+		CE7EB06D1D17DE6400082105 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7EB06C1D17DE6400082105 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,12 +72,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		10C8FA3891A76A17DD94A972 /* Pods_CACUTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CACUTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2149AE5D6DCBB9307D7B2649 /* Pods-CACUTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CACUTA.release.xcconfig"; path = "Pods/Target Support Files/Pods-CACUTA/Pods-CACUTA.release.xcconfig"; sourceTree = "<group>"; };
+		2A76EDB6519A41099B61FD7C /* Pods_CACUTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CACUTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B384B498921262D21C69AC43 /* Pods-CACUTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CACUTA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CACUTA/Pods-CACUTA.debug.xcconfig"; sourceTree = "<group>"; };
 		CE4776EE1D178D0A00F4255A /* CACUTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CACUTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE4776F11D178D0A00F4255A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CE4776F31D178D0A00F4255A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		CE4776F61D178D0A00F4255A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CE4776F81D178D0A00F4255A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CE4776FB1D178D0A00F4255A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4776FD1D178D0A00F4255A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4777021D178D0A00F4255A /* CACUTATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CACUTATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4777061D178D0A00F4255A /* CACUTATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CACUTATests.swift; sourceTree = "<group>"; };
@@ -47,6 +84,50 @@
 		CE47770D1D178D0A00F4255A /* CACUTAUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CACUTAUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4777111D178D0A00F4255A /* CACUTAUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CACUTAUITests.swift; sourceTree = "<group>"; };
 		CE4777131D178D0A00F4255A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE47771F1D178DC400F4255A /* CACUTA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CACUTA-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE4777201D178E3100F4255A /* AboutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
+		CE4777211D178E3100F4255A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE4777221D178E3100F4255A /* AreasList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AreasList.csv; sourceTree = "<group>"; };
+		CE4777231D178E3100F4255A /* AreasTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreasTableViewCell.swift; sourceTree = "<group>"; };
+		CE4777241D178E3100F4255A /* AreasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreasTableViewController.swift; sourceTree = "<group>"; };
+		CE4777251D178E3100F4255A /* AreaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaViewController.swift; sourceTree = "<group>"; };
+		CE4777291D178E3100F4255A /* STA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STA.xcdatamodel; sourceTree = "<group>"; };
+		CE47772A1D178E3100F4255A /* ClassesList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ClassesList.csv; sourceTree = "<group>"; };
+		CE47772B1D178E3100F4255A /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+		CE47772C1D178E3100F4255A /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
+		CE47772D1D178E3100F4255A /* DataBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
+		CE47772E1D178E3100F4255A /* DataSourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
+		CE47772F1D178E3100F4255A /* DisplayCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayCoursesViewController.swift; sourceTree = "<group>"; };
+		CE4777301D178E3100F4255A /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		CE4777311D178E3100F4255A /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
+		CE4777321D178E3100F4255A /* FavoriteCoursesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCoursesTableViewController.swift; sourceTree = "<group>"; };
+		CE4777331D178E3100F4255A /* FavoriteCourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCourseTableViewCell.swift; sourceTree = "<group>"; };
+		CE4777341D178E3100F4255A /* helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = helpers.swift; sourceTree = "<group>"; };
+		CE4777351D178E3100F4255A /* ImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
+		CE4777361D178E3100F4255A /* ListTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableTableViewController.swift; sourceTree = "<group>"; };
+		CE4777371D178E3100F4255A /* MoreTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
+		CE4777381D178E3100F4255A /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CE4777391D178E3100F4255A /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		CE47773A1D178E3100F4255A /* UniversitiesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversitiesCollectionViewController.swift; sourceTree = "<group>"; };
+		CE47773B1D178E3100F4255A /* UniversitiesList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UniversitiesList.csv; sourceTree = "<group>"; };
+		CE47773C1D178E3100F4255A /* UniversityCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversityCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE47773D1D178E3100F4255A /* UniversityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversityTableViewController.swift; sourceTree = "<group>"; };
+		CE47775D1D178EBE00F4255A /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Base.lproj; sourceTree = "<group>"; };
+		CE4777621D178F6E00F4255A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		CE4777741D17D2EB00F4255A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CE4777761D17D60400F4255A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = CACUTA/Assets.xcassets; sourceTree = "<group>"; };
+		CE70262C1D205E72004B572C /* AnnouncementsDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDisplayViewController.swift; sourceTree = "<group>"; };
+		CE70262E1D205FE7004B572C /* PublicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicTableViewController.swift; sourceTree = "<group>"; };
+		CE7026301D205FF6004B572C /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
+		CE7026321D207480004B572C /* AnnouncmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncmentViewController.swift; sourceTree = "<group>"; };
+		CE7026341D2078E3004B572C /* SavedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedTableViewController.swift; sourceTree = "<group>"; };
+		CE7CC5881D186610001A8BDE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		CE7CC58B1D18A60D001A8BDE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CE7CC58E1D18A8A7001A8BDE /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteClassDetailsViewController.swift; sourceTree = "<group>"; };
+		CE7EB06C1D17DE6400082105 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		E6327D5F6CF0A3B444D4CF59 /* Pods_CACUTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CACUTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +135,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A44482C854FC8973830965D3 /* Pods_CACUTA.framework in Frameworks */,
+				CE7EB06D1D17DE6400082105 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,13 +157,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70DDFB32CFBD7260101791A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE7EB06C1D17DE6400082105 /* StoreKit.framework */,
+				2A76EDB6519A41099B61FD7C /* Pods_CACUTA.framework */,
+				10C8FA3891A76A17DD94A972 /* Pods_CACUTATests.framework */,
+				E6327D5F6CF0A3B444D4CF59 /* Pods_CACUTAUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CE4776E51D178D0A00F4255A = {
 			isa = PBXGroup;
 			children = (
 				CE4776F01D178D0A00F4255A /* CACUTA */,
+				CE4777761D17D60400F4255A /* Assets.xcassets */,
+				CE47775D1D178EBE00F4255A /* Base.lproj */,
 				CE4777051D178D0A00F4255A /* CACUTATests */,
 				CE4777101D178D0A00F4255A /* CACUTAUITests */,
 				CE4776EF1D178D0A00F4255A /* Products */,
+				E2C922B5C9F99DE20C8EA456 /* Pods */,
+				70DDFB32CFBD7260101791A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,12 +195,21 @@
 		CE4776F01D178D0A00F4255A /* CACUTA */ = {
 			isa = PBXGroup;
 			children = (
-				CE4776F11D178D0A00F4255A /* AppDelegate.swift */,
-				CE4776F31D178D0A00F4255A /* ViewController.swift */,
-				CE4776F51D178D0A00F4255A /* Main.storyboard */,
-				CE4776F81D178D0A00F4255A /* Assets.xcassets */,
-				CE4776FA1D178D0A00F4255A /* LaunchScreen.storyboard */,
+				CE4777621D178F6E00F4255A /* Main.storyboard */,
+				CE4777211D178E3100F4255A /* AppDelegate.swift */,
+				CE7CC58E1D18A8A7001A8BDE /* TabBarViewController.swift */,
+				CE4777281D178E3100F4255A /* CACUTA.xcdatamodeld */,
+				CE7CC58A1D186618001A8BDE /* Sign Up & Login Scene */,
+				CE4777641D178F8A00F4255A /* More Scene */,
+				CE4777671D17902000F4255A /* Universities Scene */,
+				CE4777661D178FFE00F4255A /* Favorite Courses Scene */,
+				CE4777681D17902600F4255A /* Search Scene */,
+				CE47776A1D17907700F4255A /* Data Sourse */,
+				CE7CC58D1D18A614001A8BDE /* Models */,
+				CE4777691D17906D00F4255A /* Helpers */,
 				CE4776FD1D178D0A00F4255A /* Info.plist */,
+				CE47771F1D178DC400F4255A /* CACUTA-Bridging-Header.h */,
+				CE4777741D17D2EB00F4255A /* LaunchScreen.storyboard */,
 			);
 			path = CACUTA;
 			sourceTree = "<group>";
@@ -125,6 +232,129 @@
 			path = CACUTAUITests;
 			sourceTree = "<group>";
 		};
+		CE4777641D178F8A00F4255A /* More Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE4777371D178E3100F4255A /* MoreTableViewController.swift */,
+				CE4777201D178E3100F4255A /* AboutTableViewController.swift */,
+				CE70262B1D205E2A004B572C /* Announcements Scene */,
+				CE4777651D178FA800F4255A /* Profile Scene */,
+			);
+			name = "More Scene";
+			sourceTree = "<group>";
+		};
+		CE4777651D178FA800F4255A /* Profile Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE4777381D178E3100F4255A /* ProfileViewController.swift */,
+				CE4777301D178E3100F4255A /* EditProfileViewController.swift */,
+			);
+			name = "Profile Scene";
+			sourceTree = "<group>";
+		};
+		CE4777661D178FFE00F4255A /* Favorite Courses Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE4777331D178E3100F4255A /* FavoriteCourseTableViewCell.swift */,
+				CE4777321D178E3100F4255A /* FavoriteCoursesTableViewController.swift */,
+				CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */,
+			);
+			name = "Favorite Courses Scene";
+			sourceTree = "<group>";
+		};
+		CE4777671D17902000F4255A /* Universities Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE47773C1D178E3100F4255A /* UniversityCollectionViewCell.swift */,
+				CE47773A1D178E3100F4255A /* UniversitiesCollectionViewController.swift */,
+				CE47773D1D178E3100F4255A /* UniversityTableViewController.swift */,
+			);
+			name = "Universities Scene";
+			sourceTree = "<group>";
+		};
+		CE4777681D17902600F4255A /* Search Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE4777391D178E3100F4255A /* SearchViewController.swift */,
+				CE47772F1D178E3100F4255A /* DisplayCoursesViewController.swift */,
+				CE4777361D178E3100F4255A /* ListTableTableViewController.swift */,
+				CE4777701D1793C900F4255A /* Area Scene */,
+			);
+			name = "Search Scene";
+			sourceTree = "<group>";
+		};
+		CE4777691D17906D00F4255A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CE4777311D178E3100F4255A /* extentions.swift */,
+				CE4777341D178E3100F4255A /* helpers.swift */,
+				CE47772B1D178E3100F4255A /* constants.swift */,
+				CE4777351D178E3100F4255A /* ImagePickerManager.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		CE47776A1D17907700F4255A /* Data Sourse */ = {
+			isa = PBXGroup;
+			children = (
+				CE47772D1D178E3100F4255A /* DataBaseManager.swift */,
+				CE47772E1D178E3100F4255A /* DataSourceManager.swift */,
+				CE47773B1D178E3100F4255A /* UniversitiesList.csv */,
+				CE47772A1D178E3100F4255A /* ClassesList.csv */,
+				CE4777221D178E3100F4255A /* AreasList.csv */,
+			);
+			name = "Data Sourse";
+			sourceTree = "<group>";
+		};
+		CE4777701D1793C900F4255A /* Area Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE4777231D178E3100F4255A /* AreasTableViewCell.swift */,
+				CE4777241D178E3100F4255A /* AreasTableViewController.swift */,
+				CE4777251D178E3100F4255A /* AreaViewController.swift */,
+				CE47772C1D178E3100F4255A /* CourseDetailsViewController.swift */,
+			);
+			name = "Area Scene";
+			sourceTree = "<group>";
+		};
+		CE70262B1D205E2A004B572C /* Announcements Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE70262C1D205E72004B572C /* AnnouncementsDisplayViewController.swift */,
+				CE70262E1D205FE7004B572C /* PublicTableViewController.swift */,
+				CE7026301D205FF6004B572C /* LocalTableViewController.swift */,
+				CE7026341D2078E3004B572C /* SavedTableViewController.swift */,
+				CE7026321D207480004B572C /* AnnouncmentViewController.swift */,
+			);
+			name = "Announcements Scene";
+			sourceTree = "<group>";
+		};
+		CE7CC58A1D186618001A8BDE /* Sign Up & Login Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CE7CC5881D186610001A8BDE /* SignUpViewController.swift */,
+				CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */,
+			);
+			name = "Sign Up & Login Scene";
+			sourceTree = "<group>";
+		};
+		CE7CC58D1D18A614001A8BDE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE7CC58B1D18A60D001A8BDE /* User.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		E2C922B5C9F99DE20C8EA456 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B384B498921262D21C69AC43 /* Pods-CACUTA.debug.xcconfig */,
+				2149AE5D6DCBB9307D7B2649 /* Pods-CACUTA.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +362,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE4777161D178D0A00F4255A /* Build configuration list for PBXNativeTarget "CACUTA" */;
 			buildPhases = (
+				9B692947E023B6096D7A0739 /* [CP] Check Pods Manifest.lock */,
 				CE4776EA1D178D0A00F4255A /* Sources */,
 				CE4776EB1D178D0A00F4255A /* Frameworks */,
 				CE4776EC1D178D0A00F4255A /* Resources */,
+				DAA147D1229EE10DAF1A9F36 /* [CP] Embed Pods Frameworks */,
+				C87D0489C39C89422ED3A535 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -188,18 +421,30 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Home;
 				TargetAttributes = {
 					CE4776ED1D178D0A00F4255A = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = VF725LAA9U;
+						LastSwiftMigration = 0830;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					CE4777011D178D0A00F4255A = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = CE4776ED1D178D0A00F4255A;
 					};
 					CE47770C1D178D0A00F4255A = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = CE4776ED1D178D0A00F4255A;
 					};
 				};
@@ -229,9 +474,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4776FC1D178D0A00F4255A /* LaunchScreen.storyboard in Resources */,
-				CE4776F91D178D0A00F4255A /* Assets.xcassets in Resources */,
-				CE4776F71D178D0A00F4255A /* Main.storyboard in Resources */,
+				CE4777401D178E3100F4255A /* AreasList.csv in Resources */,
+				CE4777631D178F6E00F4255A /* Main.storyboard in Resources */,
+				CE4777581D178E3100F4255A /* UniversitiesList.csv in Resources */,
+				CE47775E1D178EBE00F4255A /* Base.lproj in Resources */,
+				CE4777771D17D60400F4255A /* Assets.xcassets in Resources */,
+				CE4777751D17D2EB00F4255A /* LaunchScreen.storyboard in Resources */,
+				CE4777471D178E3100F4255A /* ClassesList.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,13 +500,93 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9B692947E023B6096D7A0739 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C87D0489C39C89422ED3A535 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CACUTA/Pods-CACUTA-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DAA147D1229EE10DAF1A9F36 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CACUTA/Pods-CACUTA-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CE4776EA1D178D0A00F4255A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4776F41D178D0A00F4255A /* ViewController.swift in Sources */,
-				CE4776F21D178D0A00F4255A /* AppDelegate.swift in Sources */,
+				CE7CC5911D18BD55001A8BDE /* SignInViewController.swift in Sources */,
+				CE7CC5931D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift in Sources */,
+				CE7CC58C1D18A60D001A8BDE /* User.swift in Sources */,
+				CE47774F1D178E3100F4255A /* FavoriteCoursesTableViewController.swift in Sources */,
+				CE4777431D178E3100F4255A /* AreaViewController.swift in Sources */,
+				CE4777551D178E3100F4255A /* ProfileViewController.swift in Sources */,
+				CE7CC58F1D18A8A7001A8BDE /* TabBarViewController.swift in Sources */,
+				CE70262F1D205FE7004B572C /* PublicTableViewController.swift in Sources */,
+				CE70262D1D205E72004B572C /* AnnouncementsDisplayViewController.swift in Sources */,
+				CE47774A1D178E3100F4255A /* DataBaseManager.swift in Sources */,
+				CE7CC5891D186610001A8BDE /* SignUpViewController.swift in Sources */,
+				CE7026311D205FF6004B572C /* LocalTableViewController.swift in Sources */,
+				CE4777571D178E3100F4255A /* UniversitiesCollectionViewController.swift in Sources */,
+				CE4777541D178E3100F4255A /* MoreTableViewController.swift in Sources */,
+				CE4777421D178E3100F4255A /* AreasTableViewController.swift in Sources */,
+				CE47773F1D178E3100F4255A /* AppDelegate.swift in Sources */,
+				CE47774B1D178E3100F4255A /* DataSourceManager.swift in Sources */,
+				CE4777481D178E3100F4255A /* constants.swift in Sources */,
+				CE4777411D178E3100F4255A /* AreasTableViewCell.swift in Sources */,
+				CE47774E1D178E3100F4255A /* extentions.swift in Sources */,
+				CE4777461D178E3100F4255A /* CACUTA.xcdatamodeld in Sources */,
+				CE4777531D178E3100F4255A /* ListTableTableViewController.swift in Sources */,
+				CE47774D1D178E3100F4255A /* EditProfileViewController.swift in Sources */,
+				CE4777511D178E3100F4255A /* helpers.swift in Sources */,
+				CE4777561D178E3100F4255A /* SearchViewController.swift in Sources */,
+				CE7026351D2078E3004B572C /* SavedTableViewController.swift in Sources */,
+				CE47774C1D178E3100F4255A /* DisplayCoursesViewController.swift in Sources */,
+				CE4777591D178E3100F4255A /* UniversityCollectionViewCell.swift in Sources */,
+				CE7026331D207480004B572C /* AnnouncmentViewController.swift in Sources */,
+				CE4777521D178E3100F4255A /* ImagePickerManager.swift in Sources */,
+				CE4777491D178E3100F4255A /* CourseDetailsViewController.swift in Sources */,
+				CE4777501D178E3100F4255A /* FavoriteCourseTableViewCell.swift in Sources */,
+				CE47773E1D178E3100F4255A /* AboutTableViewController.swift in Sources */,
+				CE47775A1D178E3100F4255A /* UniversityTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,25 +621,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		CE4776F51D178D0A00F4255A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE4776F61D178D0A00F4255A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		CE4776FA1D178D0A00F4255A /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE4776FB1D178D0A00F4255A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		CE4777141D178D0A00F4255A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -326,8 +636,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -349,7 +661,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -372,8 +684,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -389,9 +703,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -399,23 +714,38 @@
 		};
 		CE4777171D178D0A00F4255A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B384B498921262D21C69AC43 /* Pods-CACUTA.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CACUTA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = EhabSaifan.CACUTA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EhabSaifan.CACUTA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CACUTA/CACUTA-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		CE4777181D178D0A00F4255A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2149AE5D6DCBB9307D7B2649 /* Pods-CACUTA.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CACUTA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = EhabSaifan.CACUTA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.EhabSaifan.CACUTA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CACUTA/CACUTA-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -427,6 +757,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = EhabSaifan.CACUTATests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CACUTA.app/CACUTA";
 			};
 			name = Debug;
@@ -439,6 +770,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = EhabSaifan.CACUTATests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CACUTA.app/CACUTA";
 			};
 			name = Release;
@@ -450,6 +782,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = EhabSaifan.CACUTAUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CACUTA;
 			};
 			name = Debug;
@@ -461,6 +794,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = EhabSaifan.CACUTAUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CACUTA;
 			};
 			name = Release;
@@ -484,6 +818,7 @@
 				CE4777181D178D0A00F4255A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE4777191D178D0A00F4255A /* Build configuration list for PBXNativeTarget "CACUTATests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +827,7 @@
 				CE47771B1D178D0A00F4255A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE47771C1D178D0A00F4255A /* Build configuration list for PBXNativeTarget "CACUTAUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,8 +836,22 @@
 				CE47771E1D178D0A00F4255A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CE4777281D178E3100F4255A /* CACUTA.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CE4777291D178E3100F4255A /* STA.xcdatamodel */,
+			);
+			currentVersion = CE4777291D178E3100F4255A /* STA.xcdatamodel */;
+			path = CACUTA.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CE4776E61D178D0A00F4255A /* Project object */;
 }
