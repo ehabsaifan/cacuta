@@ -78,8 +78,8 @@ class DataSourceManager: NSObject {
                 course.setValue(course_title, forKey: CourseName)
                 
                 // Get course description
-                let course_description = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
-                course.setValue(course_description, forKey: CourseDescript)
+                let about = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
+                course.setValue(about, forKey: CourseDescript)
                 
                 // Get course units
                 course.setValue(csv.rows[i][Units], forKey: CourseUnits)
@@ -161,8 +161,8 @@ class DataSourceManager: NSObject {
                 // Get Sections Count
                 area.setValue((csv.rows[i][SectionsCount]! as NSString).integerValue, forKey: AreaSecCount)
                 // Get area note
-                let area_note = csv.rows[i][Note]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
-                area.setValue(area_note, forKey: AreaNote)
+                let notes = csv.rows[i][Note]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
+                area.setValue(notes, forKey: AreaNote)
                 
             }// end for
             
