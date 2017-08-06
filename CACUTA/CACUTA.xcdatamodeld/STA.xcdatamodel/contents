@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Area" syncable="YES">
-        <attribute name="area_descript" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="area_minUnits" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="area_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="area_note" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="area_secCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="area_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minRequierdUnits" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numOfSections" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FavoriteCourse" inverseName="area" inverseEntity="FavoriteCourse" syncable="YES"/>
         <relationship name="coursesList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="area" inverseEntity="Course" syncable="YES"/>
     </entity>
     <entity name="Course" syncable="YES">
-        <attribute name="course_area" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_college" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_depart" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_descript" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_subArea" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="course_units" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="areaName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="college" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numOfUnits" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subArea" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="area" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Area" inverseName="coursesList" inverseEntity="Area" syncable="YES"/>
     </entity>
     <entity name="FavoriteCourse" syncable="YES">
@@ -28,7 +28,7 @@
         <attribute name="class_depart" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="class_descript" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="class_grade" optional="YES" attributeType="String" defaultValueString="N/A" syncable="YES"/>
-        <attribute name="class_isTaken" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="class_isTaken" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="class_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="class_subArea" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="class_units" optional="YES" attributeType="String" syncable="YES"/>
@@ -36,28 +36,28 @@
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="favoriteCourses" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Student" syncable="YES">
-        <attribute name="std_college" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="std_gpa" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="std_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="std_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="std_password" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="std_profileImage" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="std_uniChoice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="college" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gpa" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="studentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="targetUniversity" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="favoriteCourses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FavoriteCourse" inverseName="student" inverseEntity="FavoriteCourse" syncable="YES"/>
     </entity>
     <entity name="University" syncable="YES">
-        <attribute name="uni_admRate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="univ_acron" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_agpa" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_assist" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_descript" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_estab" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_rank" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="univ_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="acronym" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="admissionRate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="assistLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="averageGPA" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="establishmentYear" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Area" positionX="-263" positionY="147" width="128" height="163"/>
+        <element name="Area" positionX="-263" positionY="147" width="128" height="165"/>
         <element name="Course" positionX="-270" positionY="378" width="128" height="180"/>
         <element name="FavoriteCourse" positionX="-531" positionY="72" width="128" height="225"/>
         <element name="Student" positionX="-524" positionY="378" width="128" height="165"/>
