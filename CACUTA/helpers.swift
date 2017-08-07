@@ -18,10 +18,10 @@ class ProgressHUD: NSObject {
             let hud = MBProgressHUD.showAdded(to: fromView, animated: true)
             hud.layer.zPosition = 1
             hud.mode = mode
-            hud.detailsLabelText = NSLocalizedString(text, comment: "")
-            hud.detailsLabelFont = hud.labelFont
+            hud.detailsLabel.text = NSLocalizedString(text, comment: "")
+            hud.detailsLabel.font = hud.label.font
             delay(delayTime, closure: {() -> () in
-                hud.hide(true)
+                hud.hide(animated: true)
                 if (completion != nil){
                     completion!()
                 }
