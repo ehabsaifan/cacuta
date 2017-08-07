@@ -100,7 +100,7 @@ let StdPassword = "password"
 //college,area,sub_area,dept,course_num,units,description,name,acronym,year_founded,transfer_admission_rate,us_rank,average_gpa,logo_emblem,assist,web_address,title,notes,min_units
 let Name = "name"
 let College = "college"
-let Area = "area"
+let AREA = "area"
 let SubArea = "sub_area"
 let Depart = "dept"
 let CourseNum = "course_num"

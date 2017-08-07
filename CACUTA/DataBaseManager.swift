@@ -33,7 +33,7 @@ class DataBaseManager: NSObject {
     
     fileprivate var managedContext: NSManagedObjectContext = {
         //1
-        return (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        return AppDelegate.viewContext
     }()
     
     class var currentManager : DataBaseManager  {

@@ -13,22 +13,15 @@ class DataSourceManager: NSObject {
     
     fileprivate var objList: [NSManagedObject] = []
     
-    class var currentManager : DataSourceManager {
-        struct Static {
-            static let instance : DataSourceManager = DataSourceManager()
-        }
-        return Static.instance
-    }
+    static let currentManager = DataSourceManager()
     
     fileprivate var managedContext: NSManagedObjectContext = {
         //1
-        return (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        return AppDelegate.viewContext
     }()
     
     override init() {
         super.init()
-        
-        print("DataSourceManager Init")
     }
     
     func initDataBase() {
@@ -53,39 +46,34 @@ class DataSourceManager: NSObject {
              WHY THE HEARTS?
              Comma-separated value files do not have a set standard, and the file gets breaken down wherever a comma exists. The ❤️ is merely used to replace in text commas from the .CSV file, and it will later be substituted to a comma after it is collected
              */
-            
-            
-            //2
-            let courseEntity =  NSEntityDescription.entity(forEntityName: Entities.Course.rawValue, in:self.managedContext)
-            
-            for i in 0..<rowsCount {
-                let course = NSManagedObject(entity: courseEntity!, insertInto: self.managedContext)
                 
-                //3
-                // Get course college
-                course.setValue(csv.rows[i][College], forKey: CourseCollege)
-                // Get course area
-                course.setValue(csv.rows[i][Area], forKey: CourseArea)
-                // Get course sub-area
-                course.setValue(csv.rows[i][SubArea], forKey: CourseSubArea)
-                // Get course department
-                course.setValue(csv.rows[i][Depart], forKey: CourseDepart)
-                // Get course number
-                course.setValue(csv.rows[i][CourseNum], forKey: CourseCode)
-                
-                // Get course title
-                let course_title = csv.rows[i][Name]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
-                course.setValue(course_title, forKey: CourseName)
-                
-                // Get course description
-                let about = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
-                course.setValue(about, forKey: CourseDescript)
-                
-                // Get course units
-                course.setValue(csv.rows[i][Units], forKey: CourseUnits)
-                
-            }// end for
-            
+                for i in 0..<rowsCount {
+                   
+                    let course = Course(context: self.managedContext)
+                    //3
+                    // Get course college
+                    course.college = csv.rows[i][College]
+                    // Get course area
+                    course.areaName = csv.rows[i][AREA]
+                    // Get course sub-area
+                    course.subArea = csv.rows[i][SubArea]
+                    // Get course department
+                    course.department = csv.rows[i][Depart]
+                    // Get course number
+                    course.code = csv.rows[i][CourseNum]
+                    
+                    // Get course title
+                    let course_title = csv.rows[i][Name]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
+                    course.title = course_title
+                    
+                    // Get course description
+                    let about = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
+                    course.about = about
+                    
+                    // Get course units
+                    course.numOfUnits = csv.rows[i][Units]
+                    
+                }// end for
             //4
             print("Saving Courses")
             self.saveManagedContext()
