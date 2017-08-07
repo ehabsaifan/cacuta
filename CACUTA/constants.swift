@@ -124,7 +124,6 @@ let Note = "notes"
 let MinUnits = "min_units"
 
 // Links
-
 let STDPORTAL = URL(string: "https://myportal.fhda.edu/cp/home/displaylogin")
 let IGETC = URL(string: "http://www.deanza.edu/faculty/nickeldon/igetc.html")
 let ASSIST = URL(string: "http://www.assist.org/web-assist/welcome.html")
