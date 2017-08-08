@@ -12,7 +12,7 @@ import MBProgressHUD
 
 class ListTableTableViewController: UITableViewController, UISearchResultsUpdating{
     
-    var classes: [NSManagedObject] = [] {
+    var classes: [Course] = [] {
         didSet{
             self.tableView.reloadData()
         }
@@ -23,6 +23,10 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
             self.tableView.reloadData()
         }
     }
+    
+    private var context = {
+        return AppDelegate.viewContext
+    }()
     
     fileprivate var hud: MBProgressHUD?
     fileprivate var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>?
@@ -49,18 +53,16 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         
         self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Course.rawValue)
+        let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
         fetchRequest.returnsObjectsAsFaults = false
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
-            if let results = result {
-                self.classes = results
-                self.hud?.hide(animated: true)
-            }else if let error = error{
-                _ = ProgressHUD.displayMessage("Could not fetch Courses: \(error), \(error.userInfo)", fromView: self.view)
-            }
-        })
+        do{
+            self.classes = try self.context.fetch(fetchRequest)
+            self.hud?.hide(animated: true)
+        }catch let error as NSError{
+            _ = ProgressHUD.displayMessage("Could not fetch Courses: \(error.localizedDescription)", fromView: self.view)
+        }
     }
     
     fileprivate func initResultSearchController(){

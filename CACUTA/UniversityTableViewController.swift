@@ -81,7 +81,7 @@ class UniversityTableViewController: UITableViewController {
     @IBAction func uni_weblink(_ sender: AnyObject) {
         // Get university URL/website
         if let url_link = self.Univ?.value(forKey: UnivURL) as? String, let url = URL(string: url_link) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     

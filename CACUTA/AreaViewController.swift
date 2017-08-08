@@ -21,6 +21,10 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var areaNotesTextView: UITextView!
     
+    private var context = {
+        return AppDelegate.viewContext
+    }()
+    
     var area: NSManagedObject? {
         didSet{
             if area != nil {
@@ -70,9 +74,7 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             self.fetch(self.fetchedResultsController)
             
-            
-            
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Course.rawValue)
+            let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
             
             for section in 0..<count {
                 // Create Predicate
@@ -83,13 +85,12 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 fetchRequest.predicate = predicate
                 fetchRequest.returnsObjectsAsFaults = false
                 
-                DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
-                    if let results = result {
-                        self.coursesDict[SectionsList[section]] = results
-                    }else if let error = error{
-                        _ = ProgressHUD.displayMessage("Could not fetch Area: \(error), \(error.userInfo)", fromView: self.view)
-                    }// end errro
-                })
+                do{
+                    self.coursesDict[SectionsList[section]] = try self.context.fetch(fetchRequest)
+                    self.hud?.hide(animated: true)
+                }catch let error as NSError{
+                    _ = ProgressHUD.displayMessage("Could not fetch Area: \(error.localizedDescription)", fromView: self.view)
+                }
             }// end for
             self.hud?.hide(animated: true)
         }// end if let name
