@@ -42,10 +42,10 @@ class SignInViewController: UIViewController {
             let predicate = NSPredicate(format: "%K == %@", StdID, id)
             fetchRequest.predicate = predicate
             fetchRequest.returnsObjectsAsFaults = false
-            DataBaseManager.fetchRequest(fetchRequest) { [weak self] (result, error) in
+            DataManager.fetchRequest(fetchRequest) { [weak self] (result, error) in
                 if let result = result, result.count > 0 {
                     User.currentUser.fetchUserInfo(result[0])
-                    DataBaseManager.currentManager.isAuthenticated = true
+                    DataManager.currentManager.isAuthenticated = true
                     self?.presentingViewController?.dismiss(animated: true, completion: nil)
                 }else if result?.count == 0 {
                     ProgressHUD.displayMessage("No account found! Please sign up first", fromView: self?.view)

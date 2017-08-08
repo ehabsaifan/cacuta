@@ -27,9 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let _ = User.currentUser
         
         self.customizeAppearance()
+        
         //1
-        let appDelegate =
-            application.delegate as? AppDelegate
         let managedContext = AppDelegate.viewContext
         
         //2
@@ -40,12 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //3
         do {
             let CoursesResult =
-                try managedContext?.fetch(CoursesFetchRequest) as? [NSManagedObject]
-            let UniversitiesResult = try managedContext?.fetch(UniversitiesFetchRequest) as? [NSManagedObject]
+                try managedContext.fetch(CoursesFetchRequest) as? [NSManagedObject]
+            let UniversitiesResult = try managedContext.fetch(UniversitiesFetchRequest) as? [NSManagedObject]
             let AreasResult =
-                try managedContext?.fetch(AreasFetchRequest) as? [NSManagedObject]
+                try managedContext.fetch(AreasFetchRequest) as? [NSManagedObject]
             if CoursesResult?.count == 0 || UniversitiesResult?.count == 0 || AreasResult?.count == 0 {
-                DataSourceManager.currentManager.initDataBase()
+                DatabaseInitializerManager.currentManager.initDataBase()
             }else {
                 print("Database Active!")
             }

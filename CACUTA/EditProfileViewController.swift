@@ -1,6 +1,6 @@
 //
 //  EditProfileViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/16/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -63,7 +63,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
     
     fileprivate func fetchStdInfo() {
-        if DataBaseManager.currentManager.isAuthenticated {
+        if DataManager.currentManager.isAuthenticated {
             if let name = User.currentUser.name{
                 self.nameField?.text = name
             }
@@ -87,7 +87,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataBaseManager.fetchRequest(fetchRequest) { (result, error) in
+        DataManager.fetchRequest(fetchRequest) { (result, error) in
             if let results = result {
                 for uni in results {
                     if let name = uni.value(forKey: UnivName) as? String, let acron = uni.value(forKey: UnivAcron) as? String{

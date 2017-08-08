@@ -47,7 +47,7 @@ class User: NSObject {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main, using: { (NSNotification) in
             if let prevID = UserDefaults.standard.object(forKey: "user_id") as? String {
                 self.id = prevID
-                DataBaseManager.currentManager.isAuthenticated = true
+                DataManager.currentManager.isAuthenticated = true
                 self.getStudentObject()
                 self.fetchUserInfo(self.student!)
                 self.fetchAreas()
@@ -62,9 +62,9 @@ class User: NSObject {
             fetchRequest.predicate = predicate
             fetchRequest.returnsObjectsAsFaults = false
             
-            DataBaseManager.fetchRequest(fetchRequest) { (result, error) in
+            DataManager.fetchRequest(fetchRequest) { (result, error) in
                 if let result = result, result.count == 1 {
-                    DataBaseManager.updateValueForObject(result[0], info: info, completion: { (success, error) in
+                    DataManager.updateValueForObject(result[0], info: info, completion: { (success, error) in
                         if success {
                             User.currentUser.fetchUserInfo(result[0])
                             
@@ -99,7 +99,7 @@ class User: NSObject {
             fetchRequest.predicate = predicate
             fetchRequest.returnsObjectsAsFaults = false
             
-            DataBaseManager.fetchRequest(fetchRequest, completion: { (result, error) in
+            DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
                 if let result = result{
                     self.student =  result.first
                 }
@@ -141,7 +141,7 @@ class User: NSObject {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataBaseManager.fetchRequest(fetchRequest, completion: { (result, error) in
+        DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
             if let results = result {
                 for area in results {
                     

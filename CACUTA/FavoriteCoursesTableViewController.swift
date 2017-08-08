@@ -1,6 +1,6 @@
 //
 //  FavoriteCoursesTableViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/13/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -82,7 +82,7 @@ class FavoriteCoursesTableViewController: UITableViewController {
         
         self.areaDict = User.currentUser.fetchAreas()
         
-        if DataBaseManager.currentManager.isAuthenticated{
+        if DataManager.currentManager.isAuthenticated{
             if let student = User.currentUser.student{
                 self.coursesDict = [:]
                 self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)

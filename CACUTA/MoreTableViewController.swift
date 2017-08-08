@@ -1,6 +1,6 @@
 //
 //  MoreTableViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/19/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -45,7 +45,7 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if DataBaseManager.currentManager.isAuthenticated{
+        if DataManager.currentManager.isAuthenticated{
             self.loginLabel?.text = "Log Out"
             self.loginImageView?.image = UIImage(named: "login")
         }else {
@@ -76,8 +76,8 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             present(activityViewController, animated: true, completion: nil)
 
         case Rows.signInRow.rawValue:
-            if DataBaseManager.currentManager.isAuthenticated{
-                DataBaseManager.currentManager.isAuthenticated = false
+            if DataManager.currentManager.isAuthenticated{
+                DataManager.currentManager.isAuthenticated = false
             }else {
                 if let vc = storyboard?.instantiateViewController(withIdentifier: "SignInController") as? SignInViewController {
                     self.present(vc, animated: true, completion: nil)

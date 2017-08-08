@@ -1,6 +1,6 @@
 //
 //  constants.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/9/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -27,6 +27,14 @@ enum Entities: String {
 enum IsCourseCompleted : String {
     case Completed = "Completed"
     case NotCompleted = "Not Completed"
+}
+
+//Enum represents CSV files that contains the the data needed
+//to initialize the Database
+enum CSVFile: String {
+    case ClassesList
+    case UniversitiesList
+    case AreasList
 }
 
 let SectionsList = ["A","B","C","D","E","F","G","H","I","J","K","L"]
@@ -100,7 +108,7 @@ let StdPassword = "password"
 //college,area,sub_area,dept,course_num,units,description,name,acronym,year_founded,transfer_admission_rate,us_rank,average_gpa,logo_emblem,assist,web_address,title,notes,min_units
 let Name = "name"
 let College = "college"
-let Area = "area"
+let AREA = "area"
 let SubArea = "sub_area"
 let Depart = "dept"
 let CourseNum = "course_num"

@@ -55,7 +55,7 @@ public class CSV {
     /// encoding: encoding used to read file (default is NSUTF8StringEncoding)
     /// loadColumns: whether to populate the columns dictionary (default is true)
     public convenience init(url: NSURL, delimiter: Character = comma, encoding: String.Encoding = String.Encoding.utf8, loadColumns: Bool = true) throws {
-        let contents = try String(contentsOf: url as URL , encoding: encoding)
+        let contents = try String(contentsOf: url as URL, encoding: encoding) //String(contentsOfURL: url, encoding: encoding)
         
         self.init(string: contents, delimiter: delimiter, loadColumns: loadColumns)
     }

@@ -17,7 +17,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         self.setNeedsStatusBarAppearanceUpdate()
         
-        if DataBaseManager.currentManager.isAuthenticated{
+        if DataManager.currentManager.isAuthenticated{
            
         }
         

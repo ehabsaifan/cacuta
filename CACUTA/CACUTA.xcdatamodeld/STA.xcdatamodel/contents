@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Area" representedClassName=".Area" syncable="YES" codeGenerationType="category">
         <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="minRequierdUnits" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="numOfSections" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="numOfSections" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FavoriteCourse" inverseName="area" inverseEntity="FavoriteCourse" syncable="YES"/>
         <relationship name="coursesList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="area" inverseEntity="Course" syncable="YES"/>
@@ -37,7 +37,7 @@
     </entity>
     <entity name="Student" representedClassName=".Student" syncable="YES" codeGenerationType="category">
         <attribute name="college" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="gpa" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="gpa" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,7 +48,7 @@
     <entity name="University" representedClassName=".University" syncable="YES" codeGenerationType="category">
         <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="acronym" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="admissionRate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="admissionRate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="assistLink" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="averageGPA" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="establishmentYear" optional="YES" attributeType="String" syncable="YES"/>
