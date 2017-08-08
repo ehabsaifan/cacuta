@@ -57,9 +57,9 @@ class UniversitiesCollectionViewController: UICollectionViewController {
                         self.logos.append("\(acr)Logo")
                     }
                 }// end for
-                self.hud?.hide(true)
+                self.hud?.hide(animated: true)
             }else if let error = error{
-                ProgressHUD.displayMessage("Could not fetch universities info: \(error), \(error.userInfo)", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Could not fetch universities info: \(error), \(error.userInfo)", fromView: self.view)
             }// end error
         }
         self.collectionView?.reloadData()

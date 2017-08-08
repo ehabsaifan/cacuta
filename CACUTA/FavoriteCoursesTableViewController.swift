@@ -98,7 +98,7 @@ class FavoriteCoursesTableViewController: UITableViewController {
                     }
                 }// end for
             }
-            self.hud?.hide(true)
+            self.hud?.hide(animated: true)
             self.tableView.reloadData()
         }else {
             self.coursesDict = [:]

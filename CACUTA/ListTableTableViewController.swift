@@ -56,9 +56,9 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
             if let results = result {
                 self.classes = results
-                self.hud?.hide(true)
+                self.hud?.hide(animated: true)
             }else if let error = error{
-                ProgressHUD.displayMessage("Could not fetch Courses: \(error), \(error.userInfo)", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Could not fetch Courses: \(error), \(error.userInfo)", fromView: self.view)
             }
         })
     }

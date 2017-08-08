@@ -15,6 +15,10 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var stdIDField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
+    private var context = {
+        AppDelegate.viewContext
+    }()
+    
     var id: String? {
         didSet {
             if let id = id {
@@ -38,34 +42,32 @@ class SignInViewController: UIViewController {
     @IBAction func signinPressed(_ sender: UIButton) {
         if let id = self.stdIDField.text, !id.isEmpty, let password = self.passwordField.text, !password.isEmpty {
             
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Student.rawValue)
+            let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
             let predicate = NSPredicate(format: "%K == %@", StdID, id)
             fetchRequest.predicate = predicate
             fetchRequest.returnsObjectsAsFaults = false
-            DataManager.fetchRequest(fetchRequest) { [weak self] (result, error) in
-                if let result = result, result.count > 0 {
-                    User.currentUser.fetchUserInfo(result[0])
+            
+            do {
+                if let student = try self.context.fetch(fetchRequest).first {
+                    User.currentUser.fetchUserInfo(student)
                     DataManager.currentManager.isAuthenticated = true
-                    self?.presentingViewController?.dismiss(animated: true, completion: nil)
-                }else if result?.count == 0 {
-                    ProgressHUD.displayMessage("No account found! Please sign up first", fromView: self?.view)
+                    self.presentingViewController?.dismiss(animated: true, completion: nil)
+                }else{
+                    _ = ProgressHUD.displayMessage("No account found! Please sign up first", fromView: self.view)
                     delay(1.2, closure: {
-                        
-                        let presenter = self?.presentingViewController
+                        let presenter = self.presentingViewController
                         presenter?.dismiss(animated: true, completion: {
-                            let vc = self?.storyboard?.instantiateViewController(withIdentifier: "SignUpController") as! SignUpViewController
-                            
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "SignUpController") as! SignUpViewController
                             presenter?.present(vc, animated: true, completion: nil)
                         })// end dismiss
                     })// end delay
                 }
-                if let error = error {
-                    ProgressHUD.displayMessage("Could not fetch student: \(error), \(error.userInfo)", fromView: self?.view)
-                }// end if let error
+            } catch let error as NSError {
+                _ = ProgressHUD.displayMessage("Could not fetch student: \(error), \(error.userInfo)", fromView: self.view)
             }
         }// end if let
         else {
-            ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
         }
     }// end signinPressed
     

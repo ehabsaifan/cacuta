@@ -87,11 +87,11 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     if let results = result {
                         self.coursesDict[SectionsList[section]] = results
                     }else if let error = error{
-                        ProgressHUD.displayMessage("Could not fetch Area: \(error), \(error.userInfo)", fromView: self.view)
+                        _ = ProgressHUD.displayMessage("Could not fetch Area: \(error), \(error.userInfo)", fromView: self.view)
                     }// end errro
                 })
             }// end for
-            self.hud?.hide(true)
+            self.hud?.hide(animated: true)
         }// end if let name
     }
     

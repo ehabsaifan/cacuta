@@ -75,7 +75,7 @@ class CourseDetailsViewController: UIViewController {
                         if success {
                             self.done()
                         }else if let error = error {
-                            ProgressHUD.displayMessage("Could not add course: \(error), \(error.userInfo)", fromView: self.view)
+                            _ = ProgressHUD.displayMessage("Could not add course: \(error), \(error.userInfo)", fromView: self.view)
                         }
                     })
                 }// end isfavorite
@@ -88,7 +88,7 @@ class CourseDetailsViewController: UIViewController {
             }// end if student
         }// end is authenticated
         else{
-            ProgressHUD.displayMessage("Login First", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Login First", fromView: self.view)
             delay(1.2, closure: {
                 DataManager.currentManager.login(self, completion: nil)
             })// end delay
@@ -166,9 +166,9 @@ class CourseDetailsViewController: UIViewController {
     
     fileprivate func done(){
         if let isFavorite = self.isFavorite, isFavorite == true {
-            ProgressHUD.displayMessage("Course Removed", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Course Removed", fromView: self.view)
         }else{
-            ProgressHUD.displayMessage("Course Added", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Course Added", fromView: self.view)
         }
         delay(1.2, closure: {
             self.dismiss(animated: true, completion: nil)

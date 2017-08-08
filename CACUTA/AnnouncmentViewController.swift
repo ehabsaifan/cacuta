@@ -106,7 +106,7 @@ class AnnouncmentViewController: UIViewController {
     }
     
     @IBAction func addToFavoritePressed(_ sender: AnyObject) {
-        ProgressHUD.displayMessage("Saved", fromView: self.view)
+        _ = ProgressHUD.displayMessage("Saved", fromView: self.view)
     }
     
     /*
