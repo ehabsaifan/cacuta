@@ -28,22 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.customizeAppearance()
         
-        //1
-        let managedContext = AppDelegate.viewContext
+        let context = AppDelegate.viewContext
         
-        //2
-        let CoursesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Course.rawValue)
-        let UniversitiesFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.University.rawValue)
-        let AreasFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Area.rawValue)
-        
-        //3
         do {
-            let CoursesResult =
-                try managedContext.fetch(CoursesFetchRequest) as? [NSManagedObject]
-            let UniversitiesResult = try managedContext.fetch(UniversitiesFetchRequest) as? [NSManagedObject]
-            let AreasResult =
-                try managedContext.fetch(AreasFetchRequest) as? [NSManagedObject]
-            if CoursesResult?.count == 0 || UniversitiesResult?.count == 0 || AreasResult?.count == 0 {
+            if try context.count(for: Course.fetchRequest()) == 0 ||
+                    context.count(for: University.fetchRequest()) == 0 ||
+                     context.count(for: Area.fetchRequest()) == 0 {
                 DatabaseInitializerManager.currentManager.initDataBase()
             }else {
                 print("Database Active!")
