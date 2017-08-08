@@ -10,13 +10,11 @@ import CoreData
 import SwiftCSV
 
 class DatabaseInitializerManager: NSObject {
-    
-    fileprivate var objList: [NSManagedObject] = []
-    
+        
     static let currentManager = DatabaseInitializerManager()
     
-    fileprivate var managedContext: NSManagedObjectContext = {
-        return AppDelegate.viewContext
+    private var container = {
+        return AppDelegate.persistentContainer
     }()
     
     override init() {
@@ -24,14 +22,13 @@ class DatabaseInitializerManager: NSObject {
     }
     
     func initDataBase() {
+        print("DB start initializing")
         self.initAreas()
         self.initUniversities()
         self.initCourses()
-        print("DB initialized")
-        
     }// initDataBase
     
-
+    
     /// returns CSV file to get the data from
     /// otherwise it will return nil.
     /// - Parameter resourceName: name of the file in the bundle with the 'csv' extension
@@ -47,21 +44,23 @@ class DatabaseInitializerManager: NSObject {
         return nil
     }
     
+    
     // IMPORT ALL COURSES
     private func initCourses() {
         
-        if let csv = self.getCSVFile(forResourse: CSVFile.ClassesList) {
-            let rowsCount = csv.rows.count
-            _ = csv.rows[0]      //=> [college: Deanza, title: Composition and Reading, sub_area: A, description: Introduction to university level reading and writing❤️ with an emphasis on analysis. Close examination of a variety of texts (personal❤️ popular❤️ literary❤️ professional❤️ academic) from culturally diverse traditions. Practice in common rhetorical strategies used in academic writing. Composition of clear❤️ well-organized❤️ and well-developed essays❤️ with varying purposes and differing audiences❤️ from personal to academic., area: 1, course_num: 1A, dept: EWRT, units: 5]
-            
-            /*
-             WHY THE HEARTS?
-             Comma-separated value files do not have a set standard, and the file gets breaken down wherever a comma exists. The ❤️ is merely used to replace in text commas from the .CSV file, and it will later be substituted to a comma after it is collected
-             */
+        self.container.performBackgroundTask { (context) in
+            if let csv = self.getCSVFile(forResourse: CSVFile.ClassesList) {
+                let rowsCount = csv.rows.count
+                _ = csv.rows[0]      //=> [college: Deanza, title: Composition and Reading, sub_area: A, description: Introduction to university level reading and writing❤️ with an emphasis on analysis. Close examination of a variety of texts (personal❤️ popular❤️ literary❤️ professional❤️ academic) from culturally diverse traditions. Practice in common rhetorical strategies used in academic writing. Composition of clear❤️ well-organized❤️ and well-developed essays❤️ with varying purposes and differing audiences❤️ from personal to academic., area: 1, course_num: 1A, dept: EWRT, units: 5]
+                
+                /*
+                 WHY THE HEARTS?
+                 Comma-separated value files do not have a set standard, and the file gets breaken down wherever a comma exists. The ❤️ is merely used to replace in text commas from the .CSV file, and it will later be substituted to a comma after it is collected
+                 */
                 
                 for i in 0..<rowsCount {
-                   
-                    let course = Course(context: self.managedContext)
+                    
+                    let course = Course(context: context)
                     
                     course.college = csv.rows[i][College]
                     course.areaName = csv.rows[i][AREA]
@@ -75,77 +74,88 @@ class DatabaseInitializerManager: NSObject {
                     course.numOfUnits = csv.rows[i][Units]
                     
                 }// end for
-            
-            self.saveManagedContext()
+            }
+            self.save(context: context)
             
         }// end CSV path for courses
     }// end initCourses
     
+    
     // IMPORT ALL Areas
     private func initAreas(){
-        if let csv = self.getCSVFile(forResourse: CSVFile.AreasList) {
-            let rowsCount = csv.rows.count
-            
-            for i in 0..<rowsCount {
-                let area = Area(context: self.managedContext)
-                area.name = csv.rows[i][Name]
-                area.title = csv.rows[i][Title]
-                area.minRequierdUnits = csv.rows[i][MinUnits]
-                area.about = csv.rows[i][Descript]
-                area.numOfSections = Int32(csv.rows[i][SectionsCount]!)!
-                let notes = csv.rows[i][Note]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
-                area.notes = notes
+        
+        self.container.performBackgroundTask { (context) in
+            if let csv = self.getCSVFile(forResourse: CSVFile.AreasList) {
+                let rowsCount = csv.rows.count
                 
-                let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
-                // Create Predicate to get courses with the areaName
-                let predicate = NSPredicate(format: "areaName = %@", area.name!)
-                fetchRequest.predicate = predicate
-                fetchRequest.returnsObjectsAsFaults = false
-                do {
-                    let courses = try self.managedContext.fetch(fetchRequest)
-                    for course in courses {
-                        area.addToCoursesList(course)
+                for i in 0..<rowsCount {
+                    let area = Area(context: context)
+                    area.name = csv.rows[i][Name]
+                    area.title = csv.rows[i][Title]
+                    area.minRequierdUnits = csv.rows[i][MinUnits]
+                    area.about = csv.rows[i][Descript]
+                    area.numOfSections = Int32(csv.rows[i][SectionsCount]!)!
+                    let notes = csv.rows[i][Note]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
+                    area.notes = notes
+                    
+                    let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
+                    // Create Predicate to get courses with the areaName
+                    let predicate = NSPredicate(format: "areaName = %@", area.name!)
+                    fetchRequest.predicate = predicate
+                    fetchRequest.returnsObjectsAsFaults = false
+                    do {
+                        let courses = try context.fetch(fetchRequest)
+                        for course in courses {
+                            area.addToCoursesList(course)
+                        }
+                    }catch let error as NSError {
+                        print("\(error.localizedDescription)")
                     }
-                }catch let error as NSError {
-                    print("\(error.localizedDescription)")
-                }
+                    
+                }// end for
                 
-            }// end for
-            
-            self.saveManagedContext()
+                self.save(context: context)
+            }
             
         }// end CSV path for areas
     }// end initAreas
     
     // IMPORT ALL UNIVERSITIES
     private func initUniversities(){
-        if let csv = self.getCSVFile(forResourse: CSVFile.UniversitiesList) {
-            let rowsCount = csv.rows.count
-            
-            for i in 0..<rowsCount {
+        
+        self.container.performBackgroundTask { (context) in
+            if let csv = self.getCSVFile(forResourse: CSVFile.UniversitiesList) {
+                let rowsCount = csv.rows.count
                 
-                let university = University(context: self.managedContext)
+                for i in 0..<rowsCount {
+                    
+                    let university = University(context: context)
+                    
+                    university.name = csv.rows[i][Name]
+                    university.acronym = csv.rows[i][Acron]
+                    university.establishmentYear = csv.rows[i][YearFounded]
+                    university.admissionRate = (csv.rows[i][TransAdmRate]! as NSString).doubleValue
+                    university.rank = csv.rows[i][USRank]
+                    university.averageGPA = csv.rows[i][AGPA]
+                    university.assistLink = csv.rows[i][Assist]
+                    university.url = csv.rows[i][WebURL]
+                    let university_description = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options:.literal, range: nil)
+                    university.about = university_description
+                }// end for
                 
-                university.name = csv.rows[i][Name]
-                university.acronym = csv.rows[i][Acron]
-                university.establishmentYear = csv.rows[i][YearFounded]
-                university.admissionRate = (csv.rows[i][TransAdmRate]! as NSString).doubleValue
-                university.rank = csv.rows[i][USRank]
-                university.averageGPA = csv.rows[i][AGPA]
-                university.assistLink = csv.rows[i][Assist]
-                university.url = csv.rows[i][WebURL]
-                let university_description = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options:.literal, range: nil)
-                university.about = university_description
-            }// end for
-            
-            self.saveManagedContext()
-            
+                self.save(context: context)
+            }
         }// end CSV path for universities
     }// end initUniversities
     
-    fileprivate func saveManagedContext(){
+    
+    /// Function to save the current context
+    ///
+    /// - Parameter context: the context in which the
+    ///    changes has been done.
+    fileprivate func save(context: NSManagedObjectContext){
         do {
-            try self.managedContext.save()
+            try context.save()
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }// end catch

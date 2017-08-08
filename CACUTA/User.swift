@@ -11,6 +11,10 @@ import CoreData
 
 class User: NSObject {
     
+    private var context = {
+        AppDelegate.viewContext
+    }()
+    
     var name : String?
     var college: String?
     var gpa: String?
@@ -48,9 +52,9 @@ class User: NSObject {
             if let prevID = UserDefaults.standard.object(forKey: "user_id") as? String {
                 self.id = prevID
                 DataManager.currentManager.isAuthenticated = true
-                self.getStudentObject()
+                _ = self.getStudentObject()
                 self.fetchUserInfo(self.student!)
-                self.fetchAreas()
+                _ = self.fetchAreas()
             }
         })
     }
@@ -135,24 +139,24 @@ class User: NSObject {
     }
     
     func fetchAreas() -> [String: Int]?{
+        
         self.areaDict = [:]
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Area.rawValue)
+        
+        let fetchRequest: NSFetchRequest<Area> = Area.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: AreaName, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
-            if let results = result {
-                for area in results {
-                    
-                    if let name = area.value(forKey: AreaName) as? String, let minUnits = area.value(forKey: AreaMinUnits) as? String, let units = Int(minUnits) {
-                        self.areaDict?[name] = units
-                    }
+        do{
+            let areas = try context.fetch(fetchRequest)
+            for area in areas {
+                if let name = area.name, let minUnits = area.minRequierdUnits, let units = Int(minUnits){
+                    self.areaDict?[name] = units
                 }
-            }else if let error = error{
-                print("Could not fetch Areas: \(error), \(error.userInfo)")
             }
-        })
+        }catch let error as NSError{
+            print("Could not fetch Areas: \(error.localizedDescription)")
+        }
         return self.areaDict
     }
 
