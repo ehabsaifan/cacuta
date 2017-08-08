@@ -22,7 +22,7 @@ class User: NSObject {
     var password: String?
     var profileImage : UIImage?
     var univChoice: String?
-    var student: NSManagedObject?
+    var student: Student?
     var areaDict: [String:Int]? = [:]
     
     class var currentUser : User {
@@ -45,96 +45,76 @@ class User: NSObject {
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidEnterBackground, object: nil, queue: OperationQueue.main) { [unowned self](notification) -> Void in
-                    self.save()
-                }
+            self.save()
+        }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main, using: { (NSNotification) in
             if let prevID = UserDefaults.standard.object(forKey: "user_id") as? String {
                 self.id = prevID
                 DataManager.currentManager.isAuthenticated = true
-                _ = self.getStudentObject()
-                self.fetchUserInfo(self.student!)
+                if let student = self.getStudentObject() {
+                    self.student = student
+                    self.fetchUserInfo(student)
+                }
                 _ = self.fetchAreas()
             }
         })
     }
     
-    func updateUserInfo(_ info: [String:String], completion: UpdateResponse) {
+    func updateUserInfo(name: String?, gpa: Double?, university: String?, image: UIImage?, completion: UpdateResponse) {
         if let id = User.currentUser.id {
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Student.rawValue)
+            
+            let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
             let predicate = NSPredicate(format: "%K == %@", StdID, id)
             fetchRequest.predicate = predicate
             fetchRequest.returnsObjectsAsFaults = false
             
-            DataManager.fetchRequest(fetchRequest) { (result, error) in
-                if let result = result, result.count == 1 {
-                    DataManager.updateValueForObject(result[0], info: info, completion: { (success, error) in
-                        if success {
-                            User.currentUser.fetchUserInfo(result[0])
-                            
-                            if let completion = completion {
-                                completion(true, nil)
-                            }
-                            
-                        }// end if success
-                        else if let error = error{
-                            if let completion = completion {
-                                completion(false, error)
-                            }
-                            print("Could not update student: \(error), \(error.userInfo)")
-                        }
-                    })
-                }// end if result
-                if let error = error {
+            do{
+                if let student = try self.context.fetch(fetchRequest).first {
+                    self.fetchUserInfo(student)
+                    self.student = student
                     if let completion = completion {
-                        completion(false, error)
+                        completion(true, nil)
                     }
-                    print("Could not fetch student: \(error), \(error.userInfo)")
-                }// end if let error
+                }
+            }catch let error as NSError{
+                if let completion = completion {
+                    completion(false, error)
+                }
+                print("Could not fetch student: \(error.localizedDescription)")
             }
+            
         }// end if id
     }
     
     // CourseDetails method
-    func getStudentObject() -> NSManagedObject?{
+    func getStudentObject() -> Student?{
         if let id = id {
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Student.rawValue)
+            
+            let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
             let predicate = NSPredicate(format: "%K == %@", StdID, id)
             fetchRequest.predicate = predicate
             fetchRequest.returnsObjectsAsFaults = false
             
-            DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
-                if let result = result{
-                    self.student =  result.first
-                }
-            })
+            do{
+                return try self.context.fetch(fetchRequest).first
+            }catch let error as NSError{
+                print("Could not fetch Student: \(error.localizedDescription)")
+            }
         }
-        return self.student
+        return nil
     }
     
     // SignIn Message
-    func fetchUserInfo(_ user: NSManagedObject){
-        self.student = user
-        if let name = user.value(forKey: StdName) as? String{
-            self.name = name
-        }
-        if let gpa = user.value(forKey: StdGPA) as? Double{
-            self.gpa = "\(gpa)"
-        }
-        if let choice = user.value(forKey: StdUnivChoive) as? String {
-            self.univChoice = choice
-        }
-        if let picData = user.value(forKey: StdProfileImage) as? Data, let image = UIImage(data: picData){
-            self.profileImage = image
-        }
-        if let college = user.value(forKey: StdCollege) as? String{
-            self.college = college
-        }
-        if let id = user.value(forKey: StdID) as? String{
-            self.id = id
-        }
-        if let password = user.value(forKey: StdPassword) as? String{
-            self.password = password
+    func fetchUserInfo(_ student: Student){
+        self.name = student.name
+        self.gpa = "\(student.gpa)"
+        self.univChoice = student.targetUniversity
+        self.college = student.college
+        self.id = student.studentID
+        self.password = student.password
+        if let data = student.image as Data? {
+            self.profileImage = UIImage(data: data)
         }
     }
     
@@ -148,7 +128,7 @@ class User: NSObject {
         fetchRequest.returnsObjectsAsFaults = false
         
         do{
-            let areas = try context.fetch(fetchRequest)
+            let areas = try self.context.fetch(fetchRequest)
             for area in areas {
                 if let name = area.name, let minUnits = area.minRequierdUnits, let units = Int(minUnits){
                     self.areaDict?[name] = units
@@ -159,7 +139,7 @@ class User: NSObject {
         }
         return self.areaDict
     }
-
+    
     fileprivate func save() {
         UserDefaults.standard.set(self.id, forKey: "user_id")
         UserDefaults.standard.synchronize()

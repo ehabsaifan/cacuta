@@ -17,6 +17,10 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
     
+    private var context = {
+        AppDelegate.viewContext
+    }()
+    
     var univ: [String] = ["TBD"] {
         didSet {
             if let picker = self.pickerView {
@@ -52,7 +56,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
         if let name = self.nameField.text, !name.isEmpty, let id = self.stdIDField.text, !id.isEmpty, let password = self.passwordField.text, !password.isEmpty {
             
             guard let college = self.selectedColg, !college.isEmpty else{
-                ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
                 return
             }
             
@@ -65,7 +69,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
             info[StdUnivChoive] = self.selectedUniv
             
             if self.isStudentExist(id) {
-                ProgressHUD.displayMessage("Account already exists! Please sign in", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Account already exists! Please sign in", fromView: self.view)
                 delay(1.2, closure: {
                     
                     let presenter = self.presentingViewController
@@ -81,35 +85,30 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
                         User.currentUser.setUserInfo(info)
                         self.presentingViewController?.dismiss(animated: true, completion: nil)
                     }else if let error = error {
-                        ProgressHUD.displayMessage("Could not register: \(error), \(error.userInfo)", fromView: self.view)
+                        _ = ProgressHUD.displayMessage("Could not register: \(error), \(error.userInfo)", fromView: self.view)
                     }
                 })
             }// end if isStudentExist()
         }// end if let
         else {
-            ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
         }
         
     }
     
     fileprivate func isStudentExist(_ id: String) -> Bool{
-        var exists = false
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Student.rawValue)
+
+        let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
         let predicate = NSPredicate(format: "%K == %@", StdID, id)
         fetchRequest.predicate = predicate
         fetchRequest.returnsObjectsAsFaults = false
-        DataManager.fetchRequest(fetchRequest) { [weak self] (result, error) in
-            if let result = result, result.count == 1 {
-                exists = true
-            }else {
-                exists = false
-            }
-            if let error = error {
-                ProgressHUD.displayMessage("Could not register: \(error), \(error.userInfo)", fromView: self?.view)
-                exists = false
-            }
+        
+        do {
+            return try self.context.fetch(fetchRequest).count > 0
+        }catch let error as NSError {
+            _ = ProgressHUD.displayMessage("Could not register: \(error.localizedDescription)", fromView: self.view)
+            return false
         }
-        return exists
     }
     
     fileprivate func fetchUniv() {
@@ -127,7 +126,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
                     }
                 }// end for
             }else if let error = error{
-                ProgressHUD.displayMessage("Could not fetch student info: \(error), \(error.userInfo)", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Could not fetch student info: \(error), \(error.userInfo)", fromView: self.view)
             }// end error
         }// end fetch request
         

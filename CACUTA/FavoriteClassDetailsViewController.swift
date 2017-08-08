@@ -72,7 +72,7 @@ class FavoriteClassDetailsViewController: UIViewController {
                     self?.done()
                 }else{
                     if let error = error{
-                        ProgressHUD.displayMessage("Could update class info: \(error), \(error.userInfo)", fromView: self?.view)
+                        _ = ProgressHUD.displayMessage("Could update class info: \(error), \(error.userInfo)", fromView: self?.view)
                     }
                 }
                 })
@@ -123,9 +123,9 @@ class FavoriteClassDetailsViewController: UIViewController {
     
     fileprivate func done(){
         if let isTaken = self.isTaken, isTaken == true {
-            ProgressHUD.displayMessage("Class Taken", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Class Taken", fromView: self.view)
         }else{
-            ProgressHUD.displayMessage("Class Not Taken", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Class Not Taken", fromView: self.view)
         }
         delay(1.2, closure: {
             self.presentingViewController?.dismiss(animated: true, completion: nil)

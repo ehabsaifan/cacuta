@@ -96,7 +96,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
                     }
                 }// end for
             }else if let error = error{
-                ProgressHUD.displayMessage("Could not fetch student info: \(error), \(error.userInfo)", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Could not fetch student info: \(error), \(error.userInfo)", fromView: self.view)
             }// end error
         }// end fetch request
         
@@ -109,30 +109,19 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     @IBAction func savePressed(_ sender: UIButton) {
         
-        var info: [String: String] = [:]
-        
-        if let name = self.nameField?.text, !name.isEmptyField {
-            info[StdName] = name.trim
-        }
-        if let gpa = self.gpaField?.text, !gpa.isEmptyField {
-            info[StdGPA] = gpa
-        }
-        if !self.selectedUniv.isEmpty {
-            info[StdUnivChoive] = self.selectedUniv
-        }
-        if let image = self.profileImage.image, let data = UIImageJPEGRepresentation(image, 1){
-            let str = data.base64EncodedString(options: .endLineWithLineFeed)
-            info[StdProfileImage] = str
-        }
-        User.currentUser.updateUserInfo( info, completion: { (success, error) in
+        let name = self.nameField?.text
+        let gpa = Double(self.gpaField?.text ?? "")
+        let university = self.selectedUniv
+        let image = self.profileImage?.image
+        User.currentUser.updateUserInfo(name: name, gpa: gpa, university: university, image: image) { (success, error) in
             if success {
                 delay(0.5) {
                     self.dismiss(animated: true, completion: nil)
                 }
             }else if let error = error {
-                ProgressHUD.displayMessage(error.localizedDescription, fromView: self.view)
+                _ = ProgressHUD.displayMessage(error.localizedDescription, fromView: self.view)
             }
-        })
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

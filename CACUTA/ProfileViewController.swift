@@ -185,7 +185,7 @@ class ProfileViewController: UIViewController {
         if DataManager.currentManager.isAuthenticated {
             self.performSegue(withIdentifier: "EditProfileSegue", sender: self)
         }else{
-            ProgressHUD.displayMessage("Please login first", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Please login first", fromView: self.view)
             delay(0.5) {
                 self.dismiss(animated: true, completion: nil)
             }

@@ -16,6 +16,16 @@ extension UIView {
     }
 }
 
+extension UIImage {
+    
+    func convertToNSData() -> NSData? {
+        if let data = UIImageJPEGRepresentation(self, 1) {
+            return data as NSData
+        }
+        return nil
+    }
+}
+
 extension String {
     
     var isEmptyField: Bool {
