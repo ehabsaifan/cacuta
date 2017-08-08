@@ -65,7 +65,7 @@ class FavoriteClassDetailsViewController: UIViewController {
             var info: [String: String] = [:]
             info[ClassIsTaken] = "\(!isTaken)"
             
-            DataBaseManager.updateValueForObject(course, info: info, completion: { [weak self] (success, error) in
+            DataManager.updateValueForObject(course, info: info, completion: { [weak self] (success, error) in
                 if success {
                     self?.fetch()
                     NotificationCenter.default.post(name: Notification.Name(rawValue: ClassTakenNotification), object: nil)

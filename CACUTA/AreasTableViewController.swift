@@ -1,6 +1,6 @@
 //
 //  AreasTableViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/10/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -53,7 +53,7 @@ class AreasTableViewController: UITableViewController {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataBaseManager.fetchRequest(fetchRequest, completion: { (result, error) in
+        DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
             if let results = result {
                 self.areas = results
                 self.hud?.hide(true)

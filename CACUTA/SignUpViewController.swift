@@ -75,9 +75,9 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
                     })// end dismiss
                 })// end delay
             }else {
-                DataBaseManager.initUser(info, completion: { (success, error) in
+                DataManager.initUser(info, completion: { (success, error) in
                     if success {
-                        DataBaseManager.currentManager.isAuthenticated = true
+                        DataManager.currentManager.isAuthenticated = true
                         User.currentUser.setUserInfo(info)
                         self.presentingViewController?.dismiss(animated: true, completion: nil)
                     }else if let error = error {
@@ -98,7 +98,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
         let predicate = NSPredicate(format: "%K == %@", StdID, id)
         fetchRequest.predicate = predicate
         fetchRequest.returnsObjectsAsFaults = false
-        DataBaseManager.fetchRequest(fetchRequest) { [weak self] (result, error) in
+        DataManager.fetchRequest(fetchRequest) { [weak self] (result, error) in
             if let result = result, result.count == 1 {
                 exists = true
             }else {
@@ -118,7 +118,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataBaseManager.fetchRequest(fetchRequest) { (result, error) in
+        DataManager.fetchRequest(fetchRequest) { (result, error) in
             if let results = result {
                 for uni in results {
                     if let name = uni.value(forKey: UnivName) as? String, let acron = uni.value(forKey: UnivAcron) as? String{

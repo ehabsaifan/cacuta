@@ -1,6 +1,6 @@
 //
 //  ProfileViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/15/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -80,7 +80,7 @@ class ProfileViewController: UIViewController {
     }
     
     fileprivate func fetchStdInfo() {
-        if DataBaseManager.currentManager.isAuthenticated {
+        if DataManager.currentManager.isAuthenticated {
             if let name = User.currentUser.name{
                 self.profle_name?.text = name
             }
@@ -182,7 +182,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func editProfilePressed(_ sender: UIBarButtonItem) {
-        if DataBaseManager.currentManager.isAuthenticated {
+        if DataManager.currentManager.isAuthenticated {
             self.performSegue(withIdentifier: "EditProfileSegue", sender: self)
         }else{
             ProgressHUD.displayMessage("Please login first", fromView: self.view)

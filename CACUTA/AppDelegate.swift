@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let AreasResult =
                 try managedContext.fetch(AreasFetchRequest) as? [NSManagedObject]
             if CoursesResult?.count == 0 || UniversitiesResult?.count == 0 || AreasResult?.count == 0 {
-                DataSourceManager.currentManager.initDataBase()
+                DatabaseInitializerManager.currentManager.initDataBase()
             }else {
                 print("Database Active!")
             }

@@ -1,13 +1,14 @@
 //
-//  University+CoreDataClass.m
+//  Student.swift
 //  CACUTA
 //
 //  Created by Ehab Saifan on 8/7/17.
 //  Copyright © 2017 Home. All rights reserved.
 //
 
-#import "University+CoreDataClass.h"
+import UIKit
+import CoreData
 
-@implementation University
+class Student: NSManagedObject {
 
-@end
+}

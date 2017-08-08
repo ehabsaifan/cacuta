@@ -1,6 +1,6 @@
 //
 //  constants.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/9/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -27,6 +27,14 @@ enum Entities: String {
 enum IsCourseCompleted : String {
     case Completed = "Completed"
     case NotCompleted = "Not Completed"
+}
+
+//Enum represents CSV files that contains the the data needed
+//to initialize the Database
+enum CSVFile: String {
+    case ClassesList
+    case UniversitiesList
+    case AreasList
 }
 
 let SectionsList = ["A","B","C","D","E","F","G","H","I","J","K","L"]

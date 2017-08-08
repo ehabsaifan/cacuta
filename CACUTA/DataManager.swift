@@ -1,6 +1,6 @@
 //
-//  DataBaseManager.swift
-//  UTA//
+//  DataManager.swift
+//  CACUTA
 //  Created by Ehab Saifan on 6/19/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -14,7 +14,7 @@ typealias UpdateResponse = ((_ success : Bool, _ error : NSError?) -> ())?
 let UserLoggedInNotification = "UserLoggedInNotification"
 let UserLoggedOutNotification = "UserLoggedOutNotification"
 
-class DataBaseManager: NSObject {
+class DataManager: NSObject {
     
     fileprivate var updateCompletion: UpdateResponse?
     fileprivate var fetchCompletion: FetchResponse
@@ -32,16 +32,10 @@ class DataBaseManager: NSObject {
     }
     
     fileprivate var managedContext: NSManagedObjectContext = {
-        //1
         return AppDelegate.viewContext
     }()
     
-    class var currentManager : DataBaseManager  {
-        struct Static {
-            static let instance : DataBaseManager = DataBaseManager()
-        }
-        return Static.instance
-    }
+    static let currentManager = DataManager()
     
     override init(){
         super.init()
@@ -58,14 +52,14 @@ class DataBaseManager: NSObject {
     }
 }
 
-extension DataBaseManager {
+extension DataManager {
     class func fetchedResultController(_ entity: Entities, predicate: NSPredicate? = nil, descriptor: [NSSortDescriptor]? = nil) -> NSFetchedResultsController<NSFetchRequestResult>? {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity.rawValue)
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = descriptor
         
-        return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DataBaseManager.currentManager.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DataManager.currentManager.managedContext, sectionNameKeyPath: nil, cacheName: nil)
     }
     
     class func addFavoritCourseForUser(_ student: NSManagedObject, info: [String: String], completion: UpdateResponse){

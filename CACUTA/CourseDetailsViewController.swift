@@ -1,6 +1,6 @@
 //
 //  CourseDetailsViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/12/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -57,7 +57,7 @@ class CourseDetailsViewController: UIViewController {
     }
     
     @IBAction func addToFavorite(_ sender: AnyObject) {
-        if DataBaseManager.currentManager.isAuthenticated {
+        if DataManager.currentManager.isAuthenticated {
             if let student = User.currentUser.getStudentObject() {
                 if let isFavorite = self.isFavorite, isFavorite == false, let name = self.name, let descript = self.descript, let depart = self.depart, let code = self.code, let units = self.units, let area = self.area, let subArea = self.subArea, let college = self.college {
                     
@@ -71,7 +71,7 @@ class CourseDetailsViewController: UIViewController {
                     info[ClassSubArea] = subArea
                     info[ClassCollege] = college
                     
-                    DataBaseManager.addFavoritCourseForUser(student, info: info, completion: { (success, error) in
+                    DataManager.addFavoritCourseForUser(student, info: info, completion: { (success, error) in
                         if success {
                             self.done()
                         }else if let error = error {
@@ -90,7 +90,7 @@ class CourseDetailsViewController: UIViewController {
         else{
             ProgressHUD.displayMessage("Login First", fromView: self.view)
             delay(1.2, closure: {
-                DataBaseManager.currentManager.login(self, completion: nil)
+                DataManager.currentManager.login(self, completion: nil)
             })// end delay
         }// end if else
     }
@@ -117,7 +117,7 @@ class CourseDetailsViewController: UIViewController {
                 self.areaLabel?.text = self.area
                 
                 
-                if DataBaseManager.currentManager.isAuthenticated {
+                if DataManager.currentManager.isAuthenticated {
                     if let student = User.currentUser.getStudentObject() {
                         self.student = student
                         

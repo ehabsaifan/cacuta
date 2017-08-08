@@ -42,7 +42,7 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         
         let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
         
-        self.fetchedResultsController = DataBaseManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
+        self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
         
         // pull out core data records
         self.fetch(self.fetchedResultsController)
@@ -53,7 +53,7 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         fetchRequest.returnsObjectsAsFaults = false
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        DataBaseManager.fetchRequest(fetchRequest, completion: { (result, error) in
+        DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
             if let results = result {
                 self.classes = results
                 self.hud?.hide(true)
@@ -151,7 +151,7 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
             
             let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
             
-            self.fetchedResultsController = DataBaseManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
+            self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
             
         }
         

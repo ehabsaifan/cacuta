@@ -20,8 +20,8 @@
 		CE4777471D178E3100F4255A /* ClassesList.csv in Resources */ = {isa = PBXBuildFile; fileRef = CE47772A1D178E3100F4255A /* ClassesList.csv */; };
 		CE4777481D178E3100F4255A /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772B1D178E3100F4255A /* constants.swift */; };
 		CE4777491D178E3100F4255A /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772C1D178E3100F4255A /* CourseDetailsViewController.swift */; };
-		CE47774A1D178E3100F4255A /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772D1D178E3100F4255A /* DataBaseManager.swift */; };
-		CE47774B1D178E3100F4255A /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772E1D178E3100F4255A /* DataSourceManager.swift */; };
+		CE47774A1D178E3100F4255A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772D1D178E3100F4255A /* DataManager.swift */; };
+		CE47774B1D178E3100F4255A /* DatabaseInitializerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772E1D178E3100F4255A /* DatabaseInitializerManager.swift */; };
 		CE47774C1D178E3100F4255A /* DisplayCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47772F1D178E3100F4255A /* DisplayCoursesViewController.swift */; };
 		CE47774D1D178E3100F4255A /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777301D178E3100F4255A /* EditProfileViewController.swift */; };
 		CE47774E1D178E3100F4255A /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777311D178E3100F4255A /* extentions.swift */; };
@@ -52,7 +52,11 @@
 		CE7CC5911D18BD55001A8BDE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */; };
 		CE7CC5931D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */; };
 		CE7EB06D1D17DE6400082105 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7EB06C1D17DE6400082105 /* StoreKit.framework */; };
-		CE808B031F3912D1006CCD78 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE808B021F3912D1006CCD78 /* Area.swift */; };
+		CEEEA8411F39291000B4554C /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEA8401F39291000B4554C /* Course.swift */; };
+		CEEEA8441F392F9A00B4554C /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEA8431F392F9A00B4554C /* Area.swift */; };
+		CEEEA8461F392FA700B4554C /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEA8451F392FA700B4554C /* University.swift */; };
+		CEEEA8481F392FB300B4554C /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEA8471F392FB300B4554C /* Student.swift */; };
+		CEEEA84A1F39304100B4554C /* FavoriteCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEA8491F39304100B4554C /* FavoriteCourse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +89,6 @@
 		CE47770D1D178D0A00F4255A /* CACUTAUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CACUTAUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4777111D178D0A00F4255A /* CACUTAUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CACUTAUITests.swift; sourceTree = "<group>"; };
 		CE4777131D178D0A00F4255A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE47771F1D178DC400F4255A /* CACUTA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CACUTA-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE4777201D178E3100F4255A /* AboutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
 		CE4777211D178E3100F4255A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4777221D178E3100F4255A /* AreasList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AreasList.csv; sourceTree = "<group>"; };
@@ -96,8 +99,8 @@
 		CE47772A1D178E3100F4255A /* ClassesList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ClassesList.csv; sourceTree = "<group>"; };
 		CE47772B1D178E3100F4255A /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		CE47772C1D178E3100F4255A /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
-		CE47772D1D178E3100F4255A /* DataBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
-		CE47772E1D178E3100F4255A /* DataSourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
+		CE47772D1D178E3100F4255A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		CE47772E1D178E3100F4255A /* DatabaseInitializerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseInitializerManager.swift; sourceTree = "<group>"; };
 		CE47772F1D178E3100F4255A /* DisplayCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayCoursesViewController.swift; sourceTree = "<group>"; };
 		CE4777301D178E3100F4255A /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		CE4777311D178E3100F4255A /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
@@ -128,7 +131,12 @@
 		CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteClassDetailsViewController.swift; sourceTree = "<group>"; };
 		CE7EB06C1D17DE6400082105 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		CE808B021F3912D1006CCD78 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		CEEEA8401F39291000B4554C /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		CEEEA8421F392B5700B4554C /* CACUTA-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CACUTA-Bridging-Header.h"; sourceTree = "<group>"; };
+		CEEEA8431F392F9A00B4554C /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		CEEEA8451F392FA700B4554C /* University.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = University.swift; sourceTree = "<group>"; };
+		CEEEA8471F392FB300B4554C /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		CEEEA8491F39304100B4554C /* FavoriteCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCourse.swift; sourceTree = "<group>"; };
 		E6327D5F6CF0A3B444D4CF59 /* Pods_CACUTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CACUTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -210,7 +218,7 @@
 				CE7CC58D1D18A614001A8BDE /* Models */,
 				CE4777691D17906D00F4255A /* Helpers */,
 				CE4776FD1D178D0A00F4255A /* Info.plist */,
-				CE47771F1D178DC400F4255A /* CACUTA-Bridging-Header.h */,
+				CEEEA8421F392B5700B4554C /* CACUTA-Bridging-Header.h */,
 				CE4777741D17D2EB00F4255A /* LaunchScreen.storyboard */,
 			);
 			path = CACUTA;
@@ -299,12 +307,9 @@
 		CE47776A1D17907700F4255A /* Data Sourse */ = {
 			isa = PBXGroup;
 			children = (
-				CE47772D1D178E3100F4255A /* DataBaseManager.swift */,
+				CE47772D1D178E3100F4255A /* DataManager.swift */,
+				CEEEA84B1F396B2300B4554C /* Database */,
 				CE72CB401F37F39A00EC4D75 /* CoraData Classes Extensions */,
-				CE47772E1D178E3100F4255A /* DataSourceManager.swift */,
-				CE47773B1D178E3100F4255A /* UniversitiesList.csv */,
-				CE47772A1D178E3100F4255A /* ClassesList.csv */,
-				CE4777221D178E3100F4255A /* AreasList.csv */,
 			);
 			name = "Data Sourse";
 			sourceTree = "<group>";
@@ -335,7 +340,11 @@
 		CE72CB401F37F39A00EC4D75 /* CoraData Classes Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				CE808B021F3912D1006CCD78 /* Area.swift */,
+				CEEEA8401F39291000B4554C /* Course.swift */,
+				CEEEA8431F392F9A00B4554C /* Area.swift */,
+				CEEEA8451F392FA700B4554C /* University.swift */,
+				CEEEA8471F392FB300B4554C /* Student.swift */,
+				CEEEA8491F39304100B4554C /* FavoriteCourse.swift */,
 			);
 			name = "CoraData Classes Extensions";
 			sourceTree = "<group>";
@@ -355,6 +364,17 @@
 				CE7CC58B1D18A60D001A8BDE /* User.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		CEEEA84B1F396B2300B4554C /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				CE47772E1D178E3100F4255A /* DatabaseInitializerManager.swift */,
+				CE47773B1D178E3100F4255A /* UniversitiesList.csv */,
+				CE47772A1D178E3100F4255A /* ClassesList.csv */,
+				CE4777221D178E3100F4255A /* AreasList.csv */,
+			);
+			name = Database;
 			sourceTree = "<group>";
 		};
 		E2C922B5C9F99DE20C8EA456 /* Pods */ = {
@@ -573,20 +593,22 @@
 				CE7CC58F1D18A8A7001A8BDE /* TabBarViewController.swift in Sources */,
 				CE70262F1D205FE7004B572C /* PublicTableViewController.swift in Sources */,
 				CE70262D1D205E72004B572C /* AnnouncementsDisplayViewController.swift in Sources */,
-				CE47774A1D178E3100F4255A /* DataBaseManager.swift in Sources */,
+				CE47774A1D178E3100F4255A /* DataManager.swift in Sources */,
 				CE7CC5891D186610001A8BDE /* SignUpViewController.swift in Sources */,
 				CE7026311D205FF6004B572C /* LocalTableViewController.swift in Sources */,
 				CE4777571D178E3100F4255A /* UniversitiesCollectionViewController.swift in Sources */,
 				CE4777541D178E3100F4255A /* MoreTableViewController.swift in Sources */,
 				CE4777421D178E3100F4255A /* AreasTableViewController.swift in Sources */,
-				CE808B031F3912D1006CCD78 /* Area.swift in Sources */,
 				CE47773F1D178E3100F4255A /* AppDelegate.swift in Sources */,
-				CE47774B1D178E3100F4255A /* DataSourceManager.swift in Sources */,
+				CE47774B1D178E3100F4255A /* DatabaseInitializerManager.swift in Sources */,
+				CEEEA8481F392FB300B4554C /* Student.swift in Sources */,
+				CEEEA8461F392FA700B4554C /* University.swift in Sources */,
 				CE4777481D178E3100F4255A /* constants.swift in Sources */,
 				CE4777411D178E3100F4255A /* AreasTableViewCell.swift in Sources */,
 				CE47774E1D178E3100F4255A /* extentions.swift in Sources */,
 				CE4777461D178E3100F4255A /* CACUTA.xcdatamodeld in Sources */,
 				CE4777531D178E3100F4255A /* ListTableTableViewController.swift in Sources */,
+				CEEEA8411F39291000B4554C /* Course.swift in Sources */,
 				CE47774D1D178E3100F4255A /* EditProfileViewController.swift in Sources */,
 				CE4777511D178E3100F4255A /* helpers.swift in Sources */,
 				CE4777561D178E3100F4255A /* SearchViewController.swift in Sources */,
@@ -598,6 +620,8 @@
 				CE4777491D178E3100F4255A /* CourseDetailsViewController.swift in Sources */,
 				CE4777501D178E3100F4255A /* FavoriteCourseTableViewCell.swift in Sources */,
 				CE47773E1D178E3100F4255A /* AboutTableViewController.swift in Sources */,
+				CEEEA84A1F39304100B4554C /* FavoriteCourse.swift in Sources */,
+				CEEEA8441F392F9A00B4554C /* Area.swift in Sources */,
 				CE47775A1D178E3100F4255A /* UniversityTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,6 +702,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -719,6 +744,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -728,12 +754,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B384B498921262D21C69AC43 /* Pods-CACUTA.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CACUTA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.EhabSaifan.CACUTA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -747,12 +773,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2149AE5D6DCBB9307D7B2649 /* Pods-CACUTA.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CACUTA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.EhabSaifan.CACUTA;
 				PRODUCT_NAME = "$(TARGET_NAME)";

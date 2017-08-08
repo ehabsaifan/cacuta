@@ -112,6 +112,7 @@ extension CSV {
             if changeState(char) {
                 break
             }
+            
             currentIndex = text.index(after: currentIndex)
         }
         

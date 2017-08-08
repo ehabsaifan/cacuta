@@ -1,6 +1,6 @@
 //
 //  AreaViewController.swift
-//  UTA//
+//  CACUTA
 //  Created by Ehab Saifan on 6/11/16.
 //  Copyright © 2016 Home. All rights reserved.
 //
@@ -66,7 +66,7 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
             let predicate = NSPredicate(format: "%K == %@", CourseArea, name)
             
-            self.fetchedResultsController = DataBaseManager.fetchedResultController(Entities.Course, predicate: predicate, descriptor: [sortDescriptor])
+            self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: predicate, descriptor: [sortDescriptor])
             
             self.fetch(self.fetchedResultsController)
             
@@ -83,7 +83,7 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 fetchRequest.predicate = predicate
                 fetchRequest.returnsObjectsAsFaults = false
                 
-                DataBaseManager.fetchRequest(fetchRequest, completion: { (result, error) in
+                DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
                     if let results = result {
                         self.coursesDict[SectionsList[section]] = results
                     }else if let error = error{
@@ -160,7 +160,7 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
             
-            self.fetchedResultsController = DataBaseManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
+            self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
             
         }
         
