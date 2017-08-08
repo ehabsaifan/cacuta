@@ -112,24 +112,22 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
     }
     
     fileprivate func fetchUniv() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.University.rawValue)
+        let fetchRequest : NSFetchRequest<University> = University.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: UnivName, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataManager.fetchRequest(fetchRequest) { (result, error) in
-            if let results = result {
-                for uni in results {
-                    if let name = uni.value(forKey: UnivName) as? String, let acron = uni.value(forKey: UnivAcron) as? String{
-                        self.univ.append(name)
-                        self.acrons.append(acron)
-                    }
-                }// end for
-            }else if let error = error{
-                _ = ProgressHUD.displayMessage("Could not fetch student info: \(error), \(error.userInfo)", fromView: self.view)
-            }// end error
-        }// end fetch request
-        
+        do{
+            let universities = try self.context.fetch(fetchRequest)
+            for university in universities {
+                if let acr = university.acronym, let name = university.name {
+                    self.univ.append(name)
+                    self.acrons.append(acr)
+                }
+            }// end for
+        }catch let error as NSError{
+            _ = ProgressHUD.displayMessage("Could not fetch universities info: \(error.localizedDescription)", fromView: self.view)
+        }
         self.pickerView?.reloadAllComponents()
     }
     

@@ -16,7 +16,11 @@ class UniversitiesCollectionViewController: UICollectionViewController {
     fileprivate var hud: MBProgressHUD?
     fileprivate var logos: [String?] = []
     
-    fileprivate var Universities: [NSManagedObject] = []
+    fileprivate var Universities: [University] = []
+    
+    var context = {
+        return AppDelegate.viewContext
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,24 +47,22 @@ class UniversitiesCollectionViewController: UICollectionViewController {
         self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
         
         self.logos = []
-        //2
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.University.rawValue)
+
+        let fetchRequest : NSFetchRequest<University> = University.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: UnivAcron, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataManager.fetchRequest(fetchRequest) { (result, error) in
-            if let results = result {
-                self.Universities = results
-                for uni in results {
-                    if let acr = uni.value(forKey: UnivAcron) as? String {
-                        self.logos.append("\(acr)Logo")
-                    }
-                }// end for
-                self.hud?.hide(animated: true)
-            }else if let error = error{
-                _ = ProgressHUD.displayMessage("Could not fetch universities info: \(error), \(error.userInfo)", fromView: self.view)
-            }// end error
+        do{
+            self.Universities = try self.context.fetch(fetchRequest)
+            for university in self.Universities {
+                if let acr = university.acronym {
+                    self.logos.append("\(acr)Logo")
+                }
+            }// end for
+            self.hud?.hide(animated: true)
+        }catch let error as NSError{
+             _ = ProgressHUD.displayMessage("Could not fetch universities info: \(error.localizedDescription)", fromView: self.view)
         }
         self.collectionView?.reloadData()
     }

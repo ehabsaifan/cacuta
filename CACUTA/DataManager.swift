@@ -84,36 +84,6 @@ extension DataManager {
         }// end entity
     }
     
-    // adding a record
-    class func addObjectForEntity(_ entity: Entities, info: [String: String], completion: UpdateResponse){
-        if let entityObj = NSEntityDescription.entity(forEntityName: entity.rawValue, in: self.currentManager.managedContext) {
-            
-            let managedObj = NSManagedObject(entity: entityObj, insertInto: self.currentManager.managedContext)
-            
-            for key in info.keys {
-                managedObj.setValue(info[key], forKey: key)
-            }
-            
-            self.currentManager.saveManagedContext({ (success, error) in
-                if success {
-                    if let completion = completion{
-                        completion(true, nil)
-                    }
-                }else{
-                    if let completion = completion{
-                        completion(false, error)
-                    }
-                }// end else
-            })
-        }else {
-            if let completion = completion {
-                let error = NSError.error("\(entity.rawValue) is not Found")
-                completion(false, error)
-            }
-        }// end else
-        
-    }// end addObjectForEntity
-    
     //updating a record
     class func updateValueForObject(_ obj: NSManagedObject, info: [String: String], completion: UpdateResponse){
         for key in info.keys {
@@ -182,37 +152,6 @@ extension DataManager {
             }// end else
         }
     }
-    
-    // deleting a record
-    class func deleteObjectForEntity(_ obj: NSManagedObject, completion: UpdateResponse){
-        self.currentManager.managedContext.delete(obj)
-        self.currentManager.saveManagedContext({ (success, error) in
-            if success {
-                if let completion = completion{
-                    completion(true, nil)
-                }
-            }else{
-                if let completion = completion{
-                    completion(false, error)
-                }
-            }// end else
-        })
-    }// end deleteObjectForEntity
-    
-    // fetch an entity
-    class func fetchRequest(_ request: NSFetchRequest<NSFetchRequestResult>, completion: FetchResponse){
-        do {
-            let results =
-                try self.currentManager.managedContext.fetch(request) as! [NSManagedObject]
-            if let completion = completion {
-                completion(results, nil)
-            }
-        } catch let error as NSError {
-            if let completion = completion {
-                completion(nil, error)
-            }
-        }
-    }// end deleteObjectForEntity
     
     fileprivate func saveManagedContext(_ completion: UpdateResponse){
         do {
