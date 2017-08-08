@@ -10,9 +10,7 @@ import CoreData
 import SwiftCSV
 
 class DatabaseInitializerManager: NSObject {
-    
-    fileprivate var objList: [NSManagedObject] = []
-    
+        
     static let currentManager = DatabaseInitializerManager()
     
     private var container = {
@@ -24,11 +22,10 @@ class DatabaseInitializerManager: NSObject {
     }
     
     func initDataBase() {
+        print("DB start initializing")
         self.initAreas()
         self.initUniversities()
         self.initCourses()
-        print("DB initialized")
-        
     }// initDataBase
     
     

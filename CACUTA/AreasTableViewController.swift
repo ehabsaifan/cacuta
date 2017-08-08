@@ -11,9 +11,12 @@ import MBProgressHUD
 
 class AreasTableViewController: UITableViewController {
     
-    fileprivate var hud: MBProgressHUD?
+    private var hud: MBProgressHUD?
+    private var context = {
+        AppDelegate.viewContext
+    }()
     
-    var areas: [NSManagedObject] = [] {
+    var areas: [Area] = [] {
         didSet{
             if areas.count == 0 {
                 self.tableView.isScrollEnabled = false
@@ -48,20 +51,17 @@ class AreasTableViewController: UITableViewController {
         
         self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Entities.Area.rawValue)
+        let fetchRequest: NSFetchRequest<Area> = Area.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: AreaName, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.returnsObjectsAsFaults = false
         
-        DataManager.fetchRequest(fetchRequest, completion: { (result, error) in
-            if let results = result {
-                self.areas = results
-                self.hud?.hide(true)
-            }else if let error = error{
-                ProgressHUD.displayMessage("Could not fetch Areas: \(error), \(error.userInfo)", fromView: self.view)
-            }
-        })
-        
+        do{
+            self.areas = try self.context.fetch(fetchRequest)
+            self.hud?.hide(animated: true)
+        }catch let error as NSError{
+            _ = ProgressHUD.displayMessage("Could not fetch Areas: \(error.localizedDescription)", fromView: self.view)
+        }
     }
     
     // MARK: - Table view data source
@@ -88,41 +88,6 @@ class AreasTableViewController: UITableViewController {
         }
         return cell
     }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
     
     // MARK: - Navigation
     
