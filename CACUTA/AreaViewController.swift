@@ -36,9 +36,6 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     fileprivate var areaName: String? = ""
     
-    fileprivate var coursesDict : [String: [NSManagedObject]] = [:]
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

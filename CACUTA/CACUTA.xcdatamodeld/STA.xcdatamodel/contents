@@ -23,7 +23,7 @@
     <entity name="FavoriteCourse" representedClassName=".FavoriteCourse" parentEntity="Course" syncable="YES" codeGenerationType="category">
         <attribute name="grade" optional="YES" attributeType="String" defaultValueString="N/A" syncable="YES"/>
         <attribute name="isTaken" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="student" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Student" inverseName="favoriteCourses" inverseEntity="Student" syncable="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="favoriteCourses" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Student" representedClassName=".Student" syncable="YES" codeGenerationType="category">
         <attribute name="college" optional="YES" attributeType="String" syncable="YES"/>

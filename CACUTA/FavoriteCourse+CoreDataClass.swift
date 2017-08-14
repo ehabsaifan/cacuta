@@ -12,8 +12,8 @@ import CoreData
 
 public class FavoriteCourse: Course {
     
-    static func createFavoriteCourse(from course: Course) -> FavoriteCourse {
-        let favoriteCourse = FavoriteCourse(context: course.managedObjectContext!)
+    static func createFavoriteCourse(from course: Course, context: NSManagedObjectContext) -> FavoriteCourse {
+        let favoriteCourse = FavoriteCourse(context: context)
         favoriteCourse.name = course.name
         favoriteCourse.code = course.code
         favoriteCourse.about = course.about

@@ -114,7 +114,7 @@ class CourseDetailsViewController: UIViewController {
                 self.context.delete(favCourse)
                 self.updateButtonTitle(isFavorite: false)
             }else if let course = self.course {
-                let favCourse = FavoriteCourse.createFavoriteCourse(from: course)
+                let favCourse = FavoriteCourse.createFavoriteCourse(from: course, context: self.context)
                 favCourse.student = student
                 self.updateButtonTitle(isFavorite: true)
             }
