@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 import MBProgressHUD
 
-class ListTableTableViewController: UITableViewController, UISearchResultsUpdating{
+class ListTableTableViewController: UITableViewController, UISearchResultsUpdating, NSFetchedResultsControllerDelegate {
     
-    var classes: [Course] = [] {
+    var courses: [Course] = [] {
         didSet{
             self.tableView.reloadData()
         }
@@ -28,41 +28,30 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         return AppDelegate.viewContext
     }()
     
-    fileprivate var hud: MBProgressHUD?
-    fileprivate var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>?
-    fileprivate var resultSearchController = UISearchController(searchResultsController: nil)
+    private var hud: MBProgressHUD?
+    private var fetchedResultsController: NSFetchedResultsController<Course>?
     
+    private var resultSearchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
-        
+        self.fetchedResultsController?.delegate = self
         self.initResultSearchController()
         self.fetchCourses()
     }
     
     fileprivate func fetchCourses(){
         
+        let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
-        
-        self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
-        
-        // pull out core data records
-        self.fetch(self.fetchedResultsController)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         
         self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
         
-        let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
-        fetchRequest.returnsObjectsAsFaults = false
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do{
-            self.classes = try self.context.fetch(fetchRequest)
-            self.hud?.hide(animated: true)
-        }catch let error as NSError{
-            _ = ProgressHUD.displayMessage("Could not fetch Courses: \(error.localizedDescription)", fromView: self.view)
-        }
+        self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: "courses list")
+        self.fetch(self.fetchedResultsController)
     }
     
     fileprivate func initResultSearchController(){
@@ -78,57 +67,34 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         // makes the searchbar stay in the current screen and not spill into the next screen
         definesPresentationContext = true
     }
-    
-    // update the contents of a fetch results controller
-    fileprivate func fetch(_ frcToFetch: NSFetchedResultsController<NSFetchRequestResult>?) {
-        if let frc = frcToFetch{
-            do {
-                try frc.performFetch()
-            } catch {
-                return
-            }
-        }// end if let
-    }
-    
-    
+
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return self.fetchedResultsController?.sections?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        if self.resultSearchController.isActive {
-            if let count = self.fetchedResultsController?.sections?[section].numberOfObjects {
-                return count
-            }else{
-                return 1
-            }
-        }else{
-            return self.classes.count
+        if let count = self.fetchedResultsController?.sections?[section].numberOfObjects {
+            return count
         }
+        
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClassesListCell", for: indexPath)
-        var course: NSManagedObject
         
-        if self.resultSearchController.isActive {
-            course = self.fetchedResultsController?.object(at: indexPath) as! NSManagedObject
-        }else{
-            course = self.classes[indexPath.row]
+        if let course = self.fetchedResultsController?.object(at: indexPath) {
+            cell.textLabel?.text = course.name
+            if let units = course.numOfUnits {
+                cell.detailTextLabel?.text = "\(units) Units"
+            }else{
+                cell.detailTextLabel?.text = "N/A"
+            }
         }
-        
-        cell.textLabel?.text = course.value(forKey: CourseName) as? String
-        if let units = course.value(forKey: CourseUnits) as? String {
-            cell.detailTextLabel?.text = "\(units) Units"
-        }else{
-            cell.detailTextLabel?.text = "N/A"
-        }
-        
         return cell
     }
     
@@ -150,21 +116,29 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
             self.fetchedResultsController?.fetchRequest.predicate = predicate
         }
         else {
-            
+            let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
             let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
             
-            self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
-            
+            self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
         }
         
-        fetch(self.fetchedResultsController)
-        
-        // refresh the table view
-        self.tableView.reloadData()
+        self.fetch(self.fetchedResultsController)
     }
     
-    
-    
+    // update the contents of a fetch results controller
+    private func fetch(_ frcToFetch: NSFetchedResultsController<Course>?) {
+        if let frc = frcToFetch {
+            do {
+                try frc.performFetch()
+                self.tableView?.reloadData()
+            } catch {
+                return
+            }
+        }
+        self.hud?.hide(animated: true)
+    }
+
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -193,7 +167,7 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
             if let CVC = segue.destination as? CourseDetailsViewController {
                 let cell = sender as! UITableViewCell
                 if let indexPath = self.tableView.indexPath(for: cell) {
-                    let course = self.fetchedResultsController?.object(at: indexPath) as! NSManagedObject
+                    let course = self.fetchedResultsController?.object(at: indexPath)
                     CVC.course = course
                 }
             }// end if

@@ -62,28 +62,6 @@ extension DataManager {
         return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DataManager.currentManager.managedContext, sectionNameKeyPath: nil, cacheName: nil)
     }
     
-    class func addFavoritCourseForUser(_ student: NSManagedObject, info: [String: String], completion: UpdateResponse){
-        if let entityObj = NSEntityDescription.entity(forEntityName: Entities.FavoriteCourse.rawValue, in: self.currentManager.managedContext) {
-            let favoritCourse = NSManagedObject(entity: entityObj, insertInto: self.currentManager.managedContext)
-            for key in info.keys {
-                favoritCourse.setValue(info[key], forKey: key)
-            }
-            let favCourses = student.mutableSetValue(forKey: "favoriteCourses")
-            favCourses.add(favoritCourse)
-            self.currentManager.saveObject(student, completion: { (success, error) in
-                if success {
-                    if let completion = completion{
-                        completion(true, nil)
-                    }
-                }else{
-                    if let completion = completion{
-                        completion(false, error)
-                    }
-                }// end else
-            })
-        }// end entity
-    }
-    
     //updating a record
     class func updateValueForObject(_ obj: NSManagedObject, info: [String: String], completion: UpdateResponse){
         for key in info.keys {
@@ -97,7 +75,7 @@ extension DataManager {
                     continue
                 }
             }
-            if key == ClassIsTaken {
+            if key == IsTaken {
                 obj.setValue(info[key]?.toBool(), forKey: key)
                 continue
             }

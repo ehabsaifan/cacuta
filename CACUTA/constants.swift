@@ -58,17 +58,8 @@ let PublicAnnouncments = ["Announcments" : [
     [Publisher: "UC Daves", Date: "2016-07-20T11:24:00Z", HeadLine: "Financial Aid Refund Date", Details: "For prospective transfer applicants, we offer Transfer Information Sessions on selected dates listed below. Led by an Admissions Adviser, these sessions will discuss:\n-junior-level transfer admissions requirements\n-selection criteria for UC Santa Cruz\n-selective majors requiring specific academic preparation prior to admission\n-policies such as credit limitations and repeated courses\nNOTE:  If you are seeking general information about UCSC, the academic programs, and support services available, please consider signing up for a campus tour first. The Transfer Information Session focuses solely on the admissions process.\nWe are unable to review transcripts.  However, if you have an updated UC Transfer Admission Planner (UC TAP), we will assess your academic progress and offer you guidance provided you:\n1. Update your UC TAP account with all coursework through the present term\n2. Check the UC Santa Cruz Transfer Preparation Program box\n3. E-mail transfer@ucsc.edu at least seven (7) days prior to your Transfer Information Session date\nWe highly encourage all California community college students to begin and maintain a UC TAP account."]]
 ]
 
-
-let ClassArea = "class_area"
-let ClassCode = "class_code"
-let ClassCollege = "class_college"
-let ClassDepart = "class_depart"
-let ClassDescript = "class_descript"
-let ClassGPA = "class_gpa"
-let ClassName = "class_name"
-let ClassSubArea = "class_subArea"
-let ClassUnits = "class_units"
-let ClassIsTaken = "class_isTaken"
+let GRADE = "grade"
+let IsTaken = "isTaken"
 
 let CourseArea = "areaName"
 let CourseCode = "code"
@@ -113,7 +104,6 @@ let SubArea = "sub_area"
 let Depart = "dept"
 let CourseNum = "course_num"
 let Units = "units"
-let IsTaken = "class_isTaken"
 let Grade = "course_grade"
 let Descript = "description"
 let SectionsCount = "sections_count"
