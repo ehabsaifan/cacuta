@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Database Active!")
             }
         } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
+            print("Could not fetch \(error.localizedDescription)")
         }
 
         return true
@@ -92,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                fatalError("Unresolved error \(error.localizedDescription)")
             }
         })
         return container

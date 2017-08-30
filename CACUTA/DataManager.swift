@@ -112,7 +112,7 @@ extension DataManager {
         } catch let error as NSError  {
             if let completion = completion {
                 completion(false, error)
-                print("Could not save \(error), \(error.userInfo)")
+                print("Could not save \(error.localizedDescription)")
             }
         }// end catch
     }// end saveManagedContext

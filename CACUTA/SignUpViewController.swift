@@ -82,7 +82,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
                     if success {
                         self.presentingViewController?.dismiss(animated: true, completion: nil)
                     }else if let error = error {
-                        _ = ProgressHUD.displayMessage("Could not register: \(error), \(error.userInfo)", fromView: self.view)
+                        _ = ProgressHUD.displayMessage("Could not register: \(error.localizedDescription)", fromView: self.view)
                     }
                 })
             }// end if isStudentExist()
