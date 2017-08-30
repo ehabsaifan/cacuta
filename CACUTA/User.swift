@@ -23,7 +23,7 @@ class User: NSObject {
     var profileImage : UIImage?
     var univChoice: String?
     var student: Student?
-    var areaDict: [String:Int]? = [:]
+    var areasCompleted: [String:Int]? = [:]
     
     class var currentUser : User {
         struct Static {
@@ -115,6 +115,22 @@ class User: NSObject {
         if let data = student.image as Data? {
             self.profileImage = UIImage(data: data)
         }
+    }
+    
+    private func getAreasCompletetionPercentage() {
+        if let favCourses = student.favoriteCourses  {
+            self.areasCompleted = [:]
+            for course in favCourses {
+                if let favCourse = course as? FavoriteCourse, let area = favCourse.name, let units =  favCourse.numOfUnits, let unitsCount =  Int(units){
+                    if self.courseDict?[area] != nil {
+                        self.courseDict?[area]! += unitsCount
+                    }else{
+                        self.courseDict?[area] = unitsCount
+                    }
+                }
+            }// end for
+        }
+
     }
     
     fileprivate func save() {

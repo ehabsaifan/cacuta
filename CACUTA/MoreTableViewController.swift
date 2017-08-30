@@ -12,7 +12,7 @@ private enum Rows : Int {
     case profileRow, announcementstRow, shareRow, settingsRow, aboutRow, signInRow
 }
 
-class MoreTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+class MoreTableViewController: UITableViewController {
     
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var loginLabel: UILabel!
@@ -20,12 +20,9 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.logo.makeCircular()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.logo.makeCircular()
+
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: UserLoggedOutNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
             
             self.loginLabel?.text = "Log In"
@@ -45,6 +42,10 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.updateLoginText()
+    }
+    
+    private func updateLoginText(){
         if DataManager.currentManager.isAuthenticated{
             self.loginLabel?.text = "Log Out"
             self.loginImageView?.image = UIImage(named: "login")
@@ -52,55 +53,58 @@ class MoreTableViewController: UITableViewController, MFMailComposeViewControlle
             self.loginLabel?.text = "Log In"
             self.loginImageView?.image = UIImage(named: "signOut")
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         switch indexPath.row{
-
         case Rows.shareRow.rawValue:
-            var objectsToShare = [AnyObject]()
-            var textToShare = ""
-            if let gpa = User.currentUser.gpa {
-                textToShare = "My Curren GPA \(gpa)"
-                objectsToShare.append(textToShare as AnyObject)
-            }
-            if let myWebsite = ASSIST {
-                objectsToShare.append(myWebsite as AnyObject)
-            }
-            
-            objectsToShare = [textToShare as AnyObject]
-            let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-            present(activityViewController, animated: true, completion: nil)
-
+            self.shareInfo()
         case Rows.signInRow.rawValue:
-            if DataManager.currentManager.isAuthenticated{
-                DataManager.currentManager.isAuthenticated = false
-            }else {
-                if let vc = storyboard?.instantiateViewController(withIdentifier: "SignInController") as? SignInViewController {
-                    self.present(vc, animated: true, completion: nil)
-                }
-            }
+            self.toggleLogin()
         default:
             Void()
         }
     }
-    // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func shareInfo(){
+        var objectsToShare = [AnyObject]()
+        var textToShare = ""
+        if let gpa = User.currentUser.gpa {
+            textToShare = "My Curren GPA \(gpa)"
+            objectsToShare.append(textToShare as AnyObject)
+        }
+        if let myWebsite = ASSIST {
+            objectsToShare.append(myWebsite as AnyObject)
+        }
+        
+        objectsToShare = [textToShare as AnyObject]
+        let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
+    
+    private func toggleLogin(){
+        if DataManager.currentManager.isAuthenticated{
+            DataManager.currentManager.isAuthenticated = false
+        }else {
+            if let vc = storyboard?.instantiateViewController(withIdentifier: "SignInController") as? SignInViewController {
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+    }
+    
+}
+
+extension MoreTableViewController: MFMailComposeViewControllerDelegate {
     
     //MARK: message delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-        })
+        self.dismiss(animated: true, completion: nil)
     }
-    
     
 }

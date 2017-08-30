@@ -32,15 +32,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         self.profile_image.makeCircular()
-        self.fetchStdInfo()
+
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: UserLoggedOutNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
-            self.profle_name?.text = "Student"
-            self.current_gpa?.text = "N/A"
-            self.uniChoice?.text = "TBD"
-            self.profile_image?.image = UIImage(named: "user")
-            self.total_units?.text = "\(0)"
-            self.current_college?.text = "Unkown"
+            self.resetViews()
         }
     }
     
@@ -80,37 +75,38 @@ class ProfileViewController: UIViewController {
             self.updateAreas()
             
         }else {
-            self.profle_name?.text = "Student"
-            self.current_gpa?.text = "\(0)"
-            self.uniChoice?.text = "TBD"
-            self.profile_image?.image = UIImage(named: "user")
-            self.total_units?.text = "\(0)"
-            self.current_college?.text = "Unkown"
+            self.resetViews()
         }
     }
     
+    private func resetViews(){
+        self.profle_name?.text = "Student"
+        self.current_gpa?.text = "\(0)"
+        self.uniChoice?.text = "TBD"
+        self.profile_image?.image = UIImage(named: "user")
+        self.total_units?.text = "\(0)"
+        self.current_college?.text = "Unkown"
+    }
+    
     fileprivate func updateAreas() {
-        self.areaDict = User.currentUser.areaDict
         if let student = User.currentUser.student {
             if let favCourses = student.favoriteCourses  {
+                
                 self.courseDict = [:]
+                var total = 0
+                
                 for course in favCourses {
-                    
                     if let favCourse = course as? FavoriteCourse, let area = favCourse.name, let units =  favCourse.numOfUnits, let unitsCount =  Int(units){
-                        
                         if self.courseDict?[area] != nil {
                             self.courseDict?[area]! += unitsCount
                         }else{
                             self.courseDict?[area] = unitsCount
                         }
+                        total += unitsCount
                     }
                 }// end for
             }
             
-            var total = 0
-            for key in self.courseDict!.keys {
-                total += self.courseDict![key]!
-            }
             self.total_units.text = "\(total)"
             
         }// end if let student
