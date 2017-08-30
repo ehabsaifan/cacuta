@@ -10,10 +10,11 @@ import UIKit
 import CoreData
 import MBProgressHUD
 
-class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     
     fileprivate var hud: MBProgressHUD?
-    fileprivate var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>?
+    private var fetchedResultsController: NSFetchedResultsController<Course>?
+    
     fileprivate var resultSearchController = UISearchController(searchResultsController: nil)
     
     @IBOutlet weak var tableViewConstraints: NSLayoutConstraint!
@@ -25,7 +26,7 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return AppDelegate.viewContext
     }()
     
-    var area: NSManagedObject? {
+    var area: Area? {
         didSet{
             if area != nil {
                 self.update()
@@ -35,15 +36,12 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     fileprivate var areaName: String? = ""
     
-    fileprivate var coursesDict : [String: [NSManagedObject]] = [:]
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.fetchedResultsController?.delegate = self
         self.update()
         self.initResultSearchController()
-        self.fetchCourses()
     }
     
     
@@ -53,9 +51,8 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     fileprivate func update(){
-        
-        self.areaNotesTextView?.text = area?.value(forKey: AreaNote) as? String
-        self.areaName = area?.value(forKey: AreaName) as? String
+        self.areaNotesTextView?.text = area?.about
+        self.areaName = area?.name
         
         self.navigationItem.title = self.areaName
         self.fetchCourses()
@@ -64,35 +61,21 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     fileprivate func fetchCourses(){
         
-        let count = self.area?.value(forKey: AreaSecCount) as? Int
-        if let name = self.areaName, let count = count {
-            
-            let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
-            let predicate = NSPredicate(format: "%K == %@", CourseArea, name)
-            
-            self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: predicate, descriptor: [sortDescriptor])
-            
-            self.fetch(self.fetchedResultsController)
+        if let areaName = self.areaName {
             
             let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
             
-            for section in 0..<count {
-                // Create Predicate
-                let predicate = NSPredicate(format: "%K == %@ AND %K == %@", CourseSubArea, SectionsList[section], CourseArea, name)
-                let sortDescriptor1 = NSSortDescriptor(key: CourseName, ascending: true)
-                
-                fetchRequest.sortDescriptors = [sortDescriptor1]
-                fetchRequest.predicate = predicate
-                fetchRequest.returnsObjectsAsFaults = false
-                
-                do{
-                    self.coursesDict[SectionsList[section]] = try self.context.fetch(fetchRequest)
-                    self.hud?.hide(animated: true)
-                }catch let error as NSError{
-                    _ = ProgressHUD.displayMessage("Could not fetch Area: \(error.localizedDescription)", fromView: self.view)
-                }
-            }// end for
-            self.hud?.hide(animated: true)
+            let sortDescriptor1 = NSSortDescriptor(key: CourseSubArea, ascending: true)
+            let sortDescriptor2 = NSSortDescriptor(key: CourseName, ascending: true)
+            let predicate = NSPredicate(format: "%K == %@ AND %K == %@", CourseArea, areaName, ShouldBeDisplayed, true as CVarArg)
+            
+            fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2]
+            fetchRequest.predicate = predicate
+            
+            self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
+            
+            self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: CourseSubArea, cacheName: nil)
+            self.fetch(self.fetchedResultsController)
         }// end if let name
     }
     
@@ -120,17 +103,6 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
         definesPresentationContext = true
     }
     
-    // update the contents of a fetch results controller
-    fileprivate func fetch(_ frcToFetch: NSFetchedResultsController<NSFetchRequestResult>?) {
-        if let frc = frcToFetch{
-            do {
-                try frc.performFetch()
-            } catch {
-                return
-            }
-        }// end if let
-    }
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.tableViewConstraints.constant = 136
     }
@@ -148,66 +120,48 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // if search string is not blank
         if !trimmedSearchString.isEmpty {
             
-            if let name = self.areaName{
-                // form the search format
-                let predicate = NSPredicate(format: "%K CONTAINS[c] %@ AND %K == %@", CourseName, trimmedSearchString, CourseArea, name)
-                
-                
-                // add the search filter
-                self.fetchedResultsController?.fetchRequest.predicate = predicate
-            }
+            // form the search format
+            let predicate = NSPredicate(format: "%K CONTAINS[c] %@ AND %K == %@", CourseName, trimmedSearchString, CourseArea, areaName ?? "")
+            
+            // add the search filter
+            self.fetchedResultsController?.fetchRequest.predicate = predicate
+            self.fetch(self.fetchedResultsController)
         }
         else {
-            
-            let sortDescriptor = NSSortDescriptor(key: CourseName, ascending: true)
-            
-            self.fetchedResultsController = DataManager.fetchedResultController(Entities.Course, predicate: nil, descriptor: [sortDescriptor])
-            
+            self.fetchCourses()
         }
-        
-        fetch(self.fetchedResultsController)
-        
-        // refresh the table view
-        self.tableView.reloadData()
     }
     
+    // update the contents of a fetch results controller
+    private func fetch(_ frcToFetch: NSFetchedResultsController<Course>?) {
+        if let frc = frcToFetch {
+            do {
+                try frc.performFetch()
+                self.tableView?.reloadData()
+            } catch {
+                return
+            }
+        }
+        self.hud?.hide(animated: true)
+    }    
     
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        if self.resultSearchController.isActive {
-            return 1
-        }else{
-            let count = self.coursesDict.keys.count
-            return count
-        }
+        return self.fetchedResultsController?.sections?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        if self.resultSearchController.isActive {
-            if let count = self.fetchedResultsController?.sections?[section].numberOfObjects {
-                return count
-            }else{
-                return 1
-            }
-        }else{
-            let sectionName = SectionsList[section]
-            
-            if let courses = self.coursesDict[sectionName] {
-                return courses.count
-            }
-            return 0
+        if let count = self.fetchedResultsController?.sections?[section].numberOfObjects {
+            return count
         }
+        
+        return 1
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if self.resultSearchController.isActive {
-            return ""
-        }else{
-            return SectionsList[section]
-        }
+        let title = self.fetchedResultsController?.sections?[section].name
+        return title
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -221,28 +175,19 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let reuseIdentifier = "CourseCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
-        var course: NSManagedObject
-        
-        if self.resultSearchController.isActive {
-            course = self.fetchedResultsController?.object(at: indexPath) as! NSManagedObject
-            if let name = course.value(forKey: CourseName) as? String, let id = course.value(forKey: CourseCode) as? String, let units = course.value(forKey: CourseUnits) as? String  {
-                cell.textLabel?.text = "\(name)   \(id)"
+        if let course = self.fetchedResultsController?.object(at: indexPath) {
+            if let code = course.code, let name = course.name {
+                cell.textLabel?.text = "\(name)   \(code)"
+            }
+            if let units = course.numOfUnits {
                 cell.detailTextLabel?.text = "\(units) Units"
+            }else{
+                cell.detailTextLabel?.text = "N/A"
             }
-            return cell
-        }else{
-            let sectionName = SectionsList[indexPath.section]
-            if let courses = self.coursesDict[sectionName] {
-                let course = courses[indexPath.row]
-                if let name = course.value(forKey: CourseName) as? String, let id = course.value(forKey: CourseCode) as? String, let units = course.value(forKey: CourseUnits) as? String  {
-                    cell.textLabel?.text = "\(name)   \(id)"
-                    cell.detailTextLabel?.text = "\(units) Units"
-                }
-                return cell
-            }
+        }
+        
             return cell
         }
-    }
     
     // MARK: - Navigation
     
@@ -252,21 +197,11 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if segue.identifier == "CourseDetailSegue" {
             if let CVC = segue.destination as? CourseDetailsViewController {
-                if self.resultSearchController.isActive {
-                    let cell = sender as! UITableViewCell
-                    if let indexPath = self.tableView.indexPath(for: cell) {
-                        let course = self.fetchedResultsController?.object(at: indexPath) as! NSManagedObject
-                        CVC.course = course
-                    }
-                }else{
-                    if let indexPath = self.tableView.indexPathForSelectedRow {
-                        let section = SectionsList[indexPath.section]
-                        if let courses = self.coursesDict[section] {
-                            let course = courses[indexPath.row]
-                            CVC.course = course
-                        }
+                let cell = sender as! UITableViewCell
+                if let indexPath = self.tableView.indexPath(for: cell) {
+                    let course = self.fetchedResultsController?.object(at: indexPath)
+                    CVC.course = course
                     }// end if inedxPath
-                }
             }// end if CVC
         }//end if segue
     }// end if segue

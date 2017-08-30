@@ -64,6 +64,10 @@ extension String {
             return nil
         }
     }
+    
+    var reversed: String {
+            return String(Array(self.characters).reversed())
+    }
 }
 
 

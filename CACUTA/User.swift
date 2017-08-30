@@ -53,10 +53,9 @@ class User: NSObject {
                 self.id = prevID
                 DataManager.currentManager.isAuthenticated = true
                 if let student = self.getStudentObject() {
-                    self.student = student
                     self.fetchUserInfo(student)
                 }
-                _ = self.fetchAreas()
+                _ = Area.getDict(context: self.context)
             }
         })
     }
@@ -72,7 +71,6 @@ class User: NSObject {
             do{
                 if let student = try self.context.fetch(fetchRequest).first {
                     self.fetchUserInfo(student)
-                    self.student = student
                     if let completion = completion {
                         completion(true, nil)
                     }
@@ -107,6 +105,7 @@ class User: NSObject {
     
     // SignIn Message
     func fetchUserInfo(_ student: Student){
+        self.student = student
         self.name = student.name
         self.gpa = "\(student.gpa)"
         self.univChoice = student.targetUniversity
@@ -118,28 +117,6 @@ class User: NSObject {
         }
     }
     
-    func fetchAreas() -> [String: Int]?{
-        
-        self.areaDict = [:]
-        
-        let fetchRequest: NSFetchRequest<Area> = Area.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: AreaName, ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        do{
-            let areas = try self.context.fetch(fetchRequest)
-            for area in areas {
-                if let name = area.name, let minUnits = area.minRequierdUnits, let units = Int(minUnits){
-                    self.areaDict?[name] = units
-                }
-            }
-        }catch let error as NSError{
-            print("Could not fetch Areas: \(error.localizedDescription)")
-        }
-        return self.areaDict
-    }
-    
     fileprivate func save() {
         UserDefaults.standard.set(self.id, forKey: "user_id")
         UserDefaults.standard.synchronize()
@@ -149,13 +126,4 @@ class User: NSObject {
         self.id = UserDefaults.standard.object(forKey: "user_id") as? String
     }
     
-    // SignUP Message
-    func setUserInfo(_ info: [String:String]) {
-        self.name = info[StdName]
-        self.gpa = info[StdGPA]
-        self.password = info[StdPassword]
-        self.id = info[StdID]
-        self.college = info[StdCollege]
-        self.univChoice = info[StdUnivChoive]
-    }
 }

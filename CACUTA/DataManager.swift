@@ -42,7 +42,7 @@ class DataManager: NSObject {
     }
     
     func login(_ controller : UIViewController, completion : UpdateResponse = nil){
-        if let logInController = controller.storyboard?.instantiateViewController(withIdentifier: "SignInController") as?SignInViewController{
+        if let logInController = controller.storyboard?.instantiateViewController(withIdentifier: "SignInController") as? SignInViewController{
             
             controller.present(logInController, animated:true, completion: nil)
             if let completion = completion {
@@ -62,86 +62,20 @@ extension DataManager {
         return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DataManager.currentManager.managedContext, sectionNameKeyPath: nil, cacheName: nil)
     }
     
-    class func addFavoritCourseForUser(_ student: NSManagedObject, info: [String: String], completion: UpdateResponse){
-        if let entityObj = NSEntityDescription.entity(forEntityName: Entities.FavoriteCourse.rawValue, in: self.currentManager.managedContext) {
-            let favoritCourse = NSManagedObject(entity: entityObj, insertInto: self.currentManager.managedContext)
-            for key in info.keys {
-                favoritCourse.setValue(info[key], forKey: key)
-            }
-            let favCourses = student.mutableSetValue(forKey: "favoriteCourses")
-            favCourses.add(favoritCourse)
-            self.currentManager.saveObject(student, completion: { (success, error) in
-                if success {
-                    if let completion = completion{
-                        completion(true, nil)
-                    }
-                }else{
-                    if let completion = completion{
-                        completion(false, error)
-                    }
-                }// end else
-            })
-        }// end entity
-    }
+    class func initUser(_ info: [String:AnyObject], completion: UpdateResponse){
+
+        let student = Student(context: self.currentManager.managedContext)
+        student.name = info[StdName] as? String
+        student.gpa = info[StdGPA] as? Double ?? 0
+        student.password = info[StdPassword] as? String
+        student.studentID = info[StdID] as? String
+        student.college = info[StdCollege] as? String
+        student.targetUniversity = info[StdUnivChoive] as? String
     
-    //updating a record
-    class func updateValueForObject(_ obj: NSManagedObject, info: [String: String], completion: UpdateResponse){
-        for key in info.keys {
-            if key == StdGPA {
-                obj.setValue(Double(info[key]!), forKey: key)
-                continue
-            }
-            if key == StdProfileImage {
-                if let data = Data(base64Encoded: info[key]!, options: .ignoreUnknownCharacters){
-                    obj.setValue(data, forKey: key)
-                    continue
-                }
-            }
-            if key == ClassIsTaken {
-                obj.setValue(info[key]?.toBool(), forKey: key)
-                continue
-            }
-            else{
-                obj.setValue(info[key], forKey: key)
-            }
-            
-        }
-        self.currentManager.saveManagedContext({ (success, error) in
-            if success {
-                if let completion = completion{
-                    completion(true, nil)
-                }
-            }else{
-                if let completion = completion{
-                    completion(false, error)
-                }
-            }// end else
-        })
-    }// end
-    
-    class func initUser(_ info: [String:String], completion: UpdateResponse){
-        let studentEntity =  NSEntityDescription.entity(forEntityName: Entities.Student.rawValue, in:self.currentManager.managedContext)
-        
-        let student = NSManagedObject(entity: studentEntity!, insertInto: self.currentManager.managedContext)
-        
-        for key in info.keys {
-            if key == StdGPA {
-                student.setValue(Double(info[key]!), forKey: key)
-                continue
-            }
-            if key == StdProfileImage {
-                if let data = Data(base64Encoded: info[key]!, options: .ignoreUnknownCharacters){
-                    student.setValue(data, forKey: key)
-                    continue
-                }
-            }
-            else{
-                student.setValue(info[key], forKey: key)
-            }
-        }
-        
         self.currentManager.saveManagedContext { (success, error) in
             if success {
+                DataManager.currentManager.isAuthenticated = true
+                User.currentUser.fetchUserInfo(student)
                 if let completion = completion{
                     completion(true, nil)
                 }
@@ -150,6 +84,21 @@ extension DataManager {
                     completion(false, error)
                 }
             }// end else
+        }
+    }
+    
+    class func isStudentExist(_ id: String) -> (success: Bool, error: NSError?) {
+        
+        let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
+        let predicate = NSPredicate(format: "%K == %@", StdID, id)
+        fetchRequest.predicate = predicate
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let sucess = try self.currentManager.managedContext.fetch(fetchRequest).count > 0
+            return (success: sucess, error: nil)
+        }catch let error as NSError {
+            return (success: false, error: error)
         }
     }
     
@@ -163,26 +112,10 @@ extension DataManager {
         } catch let error as NSError  {
             if let completion = completion {
                 completion(false, error)
-                print("Could not save \(error), \(error.userInfo)")
+                print("Could not save \(error.localizedDescription)")
             }
         }// end catch
     }// end saveManagedContext
-    
-    fileprivate func saveObject(_ object: NSManagedObject, completion: UpdateResponse) {
-        do {
-            try object.managedObjectContext?.save()
-            if let completion = completion {
-                completion(true, nil)
-                print("DB Saved")
-            }
-        } catch let error as NSError  {
-            if let completion = completion {
-                completion(false, error)
-                print("Could not save \(error), \(error.userInfo)")
-            }
-        }// end catch
-    }
-    
 }
 
 

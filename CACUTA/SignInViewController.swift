@@ -63,7 +63,7 @@ class SignInViewController: UIViewController {
                     })// end delay
                 }
             } catch let error as NSError {
-                _ = ProgressHUD.displayMessage("Could not fetch student: \(error), \(error.userInfo)", fromView: self.view)
+                _ = ProgressHUD.displayMessage("Could not fetch student: \(error.localizedDescription)", fromView: self.view)
             }
         }// end if let
         else {

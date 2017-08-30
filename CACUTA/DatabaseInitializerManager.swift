@@ -23,9 +23,11 @@ class DatabaseInitializerManager: NSObject {
     
     func initDataBase() {
         print("DB start initializing")
-        self.initAreas()
-        self.initUniversities()
-        self.initCourses()
+        self.container.performBackgroundTask { (context) in
+            self.initCourses(context: context)
+            self.initAreas(context: context)
+            self.initUniversities(context: context)
+        }
     }// initDataBase
     
     
@@ -46,9 +48,9 @@ class DatabaseInitializerManager: NSObject {
     
     
     // IMPORT ALL COURSES
-    private func initCourses() {
+    private func initCourses(context: NSManagedObjectContext) {
         
-        self.container.performBackgroundTask { (context) in
+        
             if let csv = self.getCSVFile(forResourse: CSVFile.ClassesList) {
                 let rowsCount = csv.rows.count
                 _ = csv.rows[0]      //=> [college: Deanza, title: Composition and Reading, sub_area: A, description: Introduction to university level reading and writing❤️ with an emphasis on analysis. Close examination of a variety of texts (personal❤️ popular❤️ literary❤️ professional❤️ academic) from culturally diverse traditions. Practice in common rhetorical strategies used in academic writing. Composition of clear❤️ well-organized❤️ and well-developed essays❤️ with varying purposes and differing audiences❤️ from personal to academic., area: 1, course_num: 1A, dept: EWRT, units: 5]
@@ -69,12 +71,13 @@ class DatabaseInitializerManager: NSObject {
                     course.code = csv.rows[i][CourseNum]
                     let course_title = csv.rows[i][Name]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
                     course.name = course_title
+                    course.shouldBeDisplayed = true
                     let about = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
                     course.about = about
                     course.numOfUnits = csv.rows[i][Units]
                     
                 }// end for
-            }
+//            }
             self.save(context: context)
             
         }// end CSV path for courses
@@ -82,9 +85,8 @@ class DatabaseInitializerManager: NSObject {
     
     
     // IMPORT ALL Areas
-    private func initAreas(){
+    private func initAreas(context: NSManagedObjectContext){
         
-        self.container.performBackgroundTask { (context) in
             if let csv = self.getCSVFile(forResourse: CSVFile.AreasList) {
                 let rowsCount = csv.rows.count
                 
@@ -97,33 +99,16 @@ class DatabaseInitializerManager: NSObject {
                     area.numOfSections = Int32(csv.rows[i][SectionsCount]!)!
                     let notes = csv.rows[i][Note]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
                     area.notes = notes
-                    
-                    let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
-                    // Create Predicate to get courses with the areaName
-                    let predicate = NSPredicate(format: "areaName = %@", area.name!)
-                    fetchRequest.predicate = predicate
-                    fetchRequest.returnsObjectsAsFaults = false
-                    do {
-                        let courses = try context.fetch(fetchRequest)
-                        for course in courses {
-                            area.addToCoursesList(course)
-                        }
-                    }catch let error as NSError {
-                        print("\(error.localizedDescription)")
-                    }
-                    
                 }// end for
                 
                 self.save(context: context)
-            }
             
         }// end CSV path for areas
     }// end initAreas
     
     // IMPORT ALL UNIVERSITIES
-    private func initUniversities(){
+    private func initUniversities(context: NSManagedObjectContext){
         
-        self.container.performBackgroundTask { (context) in
             if let csv = self.getCSVFile(forResourse: CSVFile.UniversitiesList) {
                 let rowsCount = csv.rows.count
                 
@@ -144,7 +129,6 @@ class DatabaseInitializerManager: NSObject {
                 }// end for
                 
                 self.save(context: context)
-            }
         }// end CSV path for universities
     }// end initUniversities
     
@@ -153,11 +137,11 @@ class DatabaseInitializerManager: NSObject {
     ///
     /// - Parameter context: the context in which the
     ///    changes has been done.
-    fileprivate func save(context: NSManagedObjectContext){
+    private func save(context: NSManagedObjectContext){
         do {
             try context.save()
         } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not save \(error.localizedDescription)")
         }// end catch
     }// end save
     

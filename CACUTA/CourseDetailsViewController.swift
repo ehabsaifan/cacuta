@@ -8,6 +8,8 @@
 import UIKit
 import CoreData
 
+
+
 class CourseDetailsViewController: UIViewController {
     
     @IBOutlet weak var addButtonLabel: UIButton!
@@ -20,72 +22,98 @@ class CourseDetailsViewController: UIViewController {
     @IBOutlet weak var descritLabel: UITextView!
     @IBOutlet weak var areaLabel: UILabel!
     
-    fileprivate var name: String?
-    fileprivate var code: String?
-    fileprivate var descript: String?
-    fileprivate var college: String?
-    fileprivate var units: String?
-    fileprivate var area: String?
-    fileprivate var subArea: String?
-    fileprivate var depart: String?
+    internal var name: String?
+    internal var code: String?
+    internal var descript: String?
+    internal var college: String?
+    internal var units: String?
+    internal var area: String?
+    internal var subArea: String?
+    internal var depart: String?
     
-    fileprivate var isFavorite: Bool? = false
+    var context = {
+        AppDelegate.viewContext
+    }()
     
-    var course : NSManagedObject?
+    private var isFavorite = false
     
-    fileprivate var favCourse : NSManagedObject?
-    fileprivate var student: NSManagedObject?
+    var course: Course?
+    internal var favoriteCourse: FavoriteCourse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setupView()
+        self.updateViewsContent(for: self.course)
+        if DataManager.currentManager.isAuthenticated {
+            self.checkIfFavoriteCourse(name: self.course?.name ?? "")
+        }
+    }
+    
+    internal func setupView(){
         self.card.layer.cornerRadius = 15.0
         self.card.clipsToBounds = true
         self.navigationController?.isNavigationBarHidden = false
-        
-        self.fetch()
     }
     
+    internal func updateViewsContent(for course: Course?) {
+        
+        self.name = course?.name
+        self.code = course?.code
+        self.descript = course?.about
+        self.depart = course?.department
+        self.units = course?.numOfUnits
+        self.area = course?.areaName
+        self.subArea = course?.subArea
+        self.college = course?.college
+        
+        self.nameLabel?.text = course?.name
+        self.descritLabel?.text = course?.about
+        self.departmentLabel?.text = course?.department
+        self.codeLabel?.text = course?.code
+        self.unitsLabel?.text = course?.numOfUnits
+        self.areaLabel?.text = course?.areaName
+    }
+    
+    private func checkIfFavoriteCourse(name: String) {
+        if let student = User.currentUser.student {
+            guard let favCourses = student.favoriteCourses else{
+                self.updateButtonTitle(isFavorite: false)
+                return
+            }
+            
+            for favCourse in favCourses {
+                let favCourse = (favCourse as! FavoriteCourse)
+                if favCourse.name == name {
+                    self.isFavorite = true
+                    self.favoriteCourse = favCourse
+                    self.updateButtonTitle(isFavorite: true)
+                    return
+                }
+            }// end for
+        }
+    }// end if student
+
     override func viewDidLayoutSubviews() {
         self.navigationController?.navigationBar.isTranslucent = false
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.fetch()
+    @IBAction func buttonPressed(_ sender: AnyObject) {
+        self.analyzePress()
     }
     
-    @IBAction func addToFavorite(_ sender: AnyObject) {
-        if DataManager.currentManager.isAuthenticated {
-            if let student = User.currentUser.getStudentObject() {
-                if let isFavorite = self.isFavorite, isFavorite == false, let name = self.name, let descript = self.descript, let depart = self.depart, let code = self.code, let units = self.units, let area = self.area, let subArea = self.subArea, let college = self.college {
-                    
-                    var info: [String: String] = [:]
-                    info[ClassName] = name
-                    info[ClassCode] = code
-                    info[ClassDescript] = descript
-                    info[ClassDepart] = depart
-                    info[ClassUnits] = units
-                    info[ClassArea] = area
-                    info[ClassSubArea] = subArea
-                    info[ClassCollege] = college
-                    
-                    DataManager.addFavoritCourseForUser(student, info: info, completion: { (success, error) in
-                        if success {
-                            self.done()
-                        }else if let error = error {
-                            _ = ProgressHUD.displayMessage("Could not add course: \(error), \(error.userInfo)", fromView: self.view)
-                        }
-                    })
-                }// end isfavorite
-                else if let favCourse = self.favCourse {
-                    // Removing favoriteCourse
-                    let favCourses = student.mutableSetValue(forKey: "favoriteCourses")
-                    favCourses.remove(favCourse)
-                    self.done()
-                }// end is favCourse
-            }// end if student
+    internal func analyzePress(){
+        if let student = User.currentUser.student, DataManager.currentManager.isAuthenticated {
+            if self.isFavorite, let favCourse = self.favoriteCourse  {
+                self.context.delete(favCourse)
+                self.updateButtonTitle(isFavorite: false)
+            }else if let course = self.course {
+                let favCourse = FavoriteCourse.createFavoriteCourse(from: course, context: self.context)
+                student.addToFavoriteCourses(favCourse)
+                self.updateButtonTitle(isFavorite: true)
+            }
+            self.save(context: self.context)
+            self.done()
         }// end is authenticated
         else{
             _ = ProgressHUD.displayMessage("Login First", fromView: self.view)
@@ -95,67 +123,16 @@ class CourseDetailsViewController: UIViewController {
         }// end if else
     }
     
-    fileprivate func fetch() {
-        
-        if let course = self.course {
-            if let name = course.value(forKey: CourseName) as? String, let descript = course.value(forKey: CourseDescript) as? String, let depart = course.value(forKey: CourseDepart) as? String, let code = course.value(forKey: CourseCode) as? String, let units = course.value(forKey: CourseUnits) as? String, let area = course.value(forKey: CourseArea) as? String, let subArea = course.value(forKey: CourseSubArea) as? String, let college = course.value(forKey: CourseCollege) as? String {
-                
-                self.name = name
-                self.code = code
-                self.descript = descript
-                self.depart = depart
-                self.units = units
-                self.area = area
-                self.subArea = subArea
-                self.college = college
-                
-                self.nameLabel?.text = self.name
-                self.descritLabel?.text = self.descript
-                self.departmentLabel?.text = self.depart
-                self.codeLabel?.text = self.code
-                self.unitsLabel?.text = self.units
-                self.areaLabel?.text = self.area
-                
-                
-                if DataManager.currentManager.isAuthenticated {
-                    if let student = User.currentUser.getStudentObject() {
-                        self.student = student
-                        
-                        let favCourses = student.mutableSetValue(forKey: "favoriteCourses")
-                        
-                        if favCourses.count == 0 {
-                            self.isFavorite = false
-                            self.favCourse = nil
-                            self.updateView()
-                        }else{
-                            var found = false
-                            for favCourse in favCourses {
-                                if let favName = (favCourse as AnyObject).value(forKey: ClassName) as? String, favName == name {
-                                    found = true
-                                    self.isFavorite = true
-                                    self.favCourse = favCourse as? NSManagedObject
-                                    self.updateView()
-                                    return
-                                }
-                            }// end for
-                            if !found {
-                                self.isFavorite = false
-                                self.favCourse = nil
-                                self.updateView()
-                            }
-                        }
-                    }// end if student
-                }// end isAuthenticated
-            }// end if let course
-        }// end if let course
+    @IBAction func dismiss(_ sender: UIButton) {
+        self.dismissCard()
     }
     
-    @IBAction func dismiss(_ sender: UIButton) {
+    internal func dismissCard() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    fileprivate func updateView() {
-        if let isFavorite = self.isFavorite, isFavorite == true {
+    internal func updateButtonTitle(isFavorite: Bool) {
+        if isFavorite {
             self.addButtonLabel?.setTitle("Remove From Favorite", for: UIControlState())
             self.addButtonLabel?.backgroundColor = UIColor.red
         }else {
@@ -165,7 +142,7 @@ class CourseDetailsViewController: UIViewController {
     }
     
     fileprivate func done(){
-        if let isFavorite = self.isFavorite, isFavorite == true {
+        if isFavorite {
             _ = ProgressHUD.displayMessage("Course Removed", fromView: self.view)
         }else{
             _ = ProgressHUD.displayMessage("Course Added", fromView: self.view)
@@ -175,7 +152,13 @@ class CourseDetailsViewController: UIViewController {
         })
     }// end done
     
-    
+    func save(context: NSManagedObjectContext){
+        do {
+            try context.save()
+        } catch let error as NSError  {
+            print("Could not save \(error.localizedDescription)")
+        }// end catch
+    }// end save
 }
 
 

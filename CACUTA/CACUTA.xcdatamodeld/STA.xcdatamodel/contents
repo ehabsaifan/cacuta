@@ -1,39 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Area" representedClassName=".Area" syncable="YES" codeGenerationType="category">
         <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="minRequierdUnits" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="numOfSections" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FavoriteCourse" inverseName="area" inverseEntity="FavoriteCourse" syncable="YES"/>
-        <relationship name="coursesList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="area" inverseEntity="Course" syncable="YES"/>
     </entity>
     <entity name="Course" representedClassName=".Course" syncable="YES" codeGenerationType="category">
-        <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="areaName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="college" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="numOfUnits" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subArea" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="area" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Area" inverseName="coursesList" inverseEntity="Area" syncable="YES"/>
+        <attribute name="about" attributeType="String" syncable="YES"/>
+        <attribute name="areaName" attributeType="String" syncable="YES"/>
+        <attribute name="code" attributeType="String" syncable="YES"/>
+        <attribute name="college" attributeType="String" syncable="YES"/>
+        <attribute name="department" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="numOfUnits" attributeType="String" syncable="YES"/>
+        <attribute name="shouldBeDisplayed" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subArea" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="FavoriteCourse" representedClassName=".FavoriteCourse" syncable="YES" codeGenerationType="category">
-        <attribute name="class_area" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_college" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_depart" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_descript" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_grade" optional="YES" attributeType="String" defaultValueString="N/A" syncable="YES"/>
-        <attribute name="class_isTaken" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="class_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_subArea" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="class_units" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="area" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Area" inverseName="courses" inverseEntity="Area" syncable="YES"/>
-        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="favoriteCourses" inverseEntity="Student" syncable="YES"/>
+    <entity name="FavoriteCourse" representedClassName=".FavoriteCourse" parentEntity="Course" syncable="YES" codeGenerationType="category">
+        <attribute name="grade" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isTaken" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Student" inverseName="favoriteCourses" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Student" representedClassName=".Student" syncable="YES" codeGenerationType="category">
         <attribute name="college" optional="YES" attributeType="String" syncable="YES"/>
@@ -57,10 +46,10 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Area" positionX="-263" positionY="147" width="128" height="165"/>
+        <element name="Area" positionX="-263" positionY="147" width="128" height="135"/>
         <element name="Course" positionX="-270" positionY="378" width="128" height="180"/>
-        <element name="FavoriteCourse" positionX="-531" positionY="72" width="128" height="225"/>
         <element name="Student" positionX="-524" positionY="378" width="128" height="165"/>
         <element name="University" positionX="-99" positionY="225" width="128" height="180"/>
+        <element name="FavoriteCourse" positionX="-315" positionY="297" width="128" height="90"/>
     </elements>
 </model>

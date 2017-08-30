@@ -7,30 +7,6 @@
 
 import UIKit
 import CoreData
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
 
 class ProfileViewController: UIViewController {
     
@@ -116,19 +92,20 @@ class ProfileViewController: UIViewController {
     fileprivate func updateAreas() {
         self.areaDict = User.currentUser.areaDict
         if let student = User.currentUser.student {
-            let favCourses = student.mutableSetValue(forKey: "favoriteCourses")
-            self.courseDict = [:]
-            for course in favCourses {
-                
-                if let course = course as? NSManagedObject, let area = course.value(forKey: ClassArea) as? String, let units = course.value(forKey: ClassUnits) as? String, let unit = Int(units), let isTaken = (course.value(forKey: ClassIsTaken) as? Bool), isTaken == true{
+            if let favCourses = student.favoriteCourses  {
+                self.courseDict = [:]
+                for course in favCourses {
                     
-                    if self.courseDict?[area] != nil {
-                        self.courseDict?[area]! += unit
-                    }else{
-                        self.courseDict?[area] = unit
+                    if let favCourse = course as? FavoriteCourse, let area = favCourse.name, let units =  favCourse.numOfUnits, let unitsCount =  Int(units){
+                        
+                        if self.courseDict?[area] != nil {
+                            self.courseDict?[area]! += unitsCount
+                        }else{
+                            self.courseDict?[area] = unitsCount
+                        }
                     }
-                }
-            }// end for
+                }// end for
+            }
             
             var total = 0
             for key in self.courseDict!.keys {
@@ -142,7 +119,7 @@ class ProfileViewController: UIViewController {
             
             for key in keys{
                 
-                if self.courseDict?[key] >= self.areaDict?[key] {
+                if (self.courseDict?[key])! >= (self.areaDict?[key])! {
                     switch key {
                     case "Area 1":
                         self.area1Label.backgroundColor = UIColor.orange
