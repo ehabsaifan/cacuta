@@ -32,15 +32,11 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         self.profile_image.makeCircular()
-        self.fetchStdInfo()
+
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: UserLoggedOutNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
-            self.profle_name?.text = "Student"
-            self.current_gpa?.text = "N/A"
-            self.uniChoice?.text = "TBD"
-            self.profile_image?.image = UIImage(named: "user")
-            self.total_units?.text = "\(0)"
-            self.current_college?.text = "Unkown"
+            self.resetViews()
+            self.resetAreasCompletionProgress()
         }
     }
     
@@ -51,8 +47,9 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.resetViews()
+        self.resetAreasCompletionProgress()
         self.fetchStdInfo()
-        
     }
     
     fileprivate func fetchStdInfo() {
@@ -79,81 +76,64 @@ class ProfileViewController: UIViewController {
             
             self.updateAreas()
             
-        }else {
-            self.profle_name?.text = "Student"
-            self.current_gpa?.text = "\(0)"
-            self.uniChoice?.text = "TBD"
-            self.profile_image?.image = UIImage(named: "user")
-            self.total_units?.text = "\(0)"
-            self.current_college?.text = "Unkown"
         }
     }
     
+    private func resetViews(){
+        self.profle_name?.text = "Student"
+        self.current_gpa?.text = "\(0)"
+        self.uniChoice?.text = "TBD"
+        self.profile_image?.image = UIImage(named: "user")
+        self.total_units?.text = "\(0)"
+        self.current_college?.text = "Unkown"
+    }
+    
+    private func resetAreasCompletionProgress(){
+        let color = UIColor.lightGray
+        self.area1Label.backgroundColor = color
+        self.area1Label.text = "Area 1\n0%"
+        self.area2Label.backgroundColor = color
+        self.area2Label.text = "Area 2\n0%"
+        self.area3Label.backgroundColor = color
+        self.area3Label.text = "Area 3\n0%"
+        self.area4Label.backgroundColor = color
+        self.area4Label.text = "Area 4\n0%"
+        self.area5Label.backgroundColor = color
+        self.area5Label.text = "Area 5\n0%"
+        self.area6Label.backgroundColor = color
+        self.area6Label.text = "Area 6\n0%"
+    }
+    
     fileprivate func updateAreas() {
-        self.areaDict = User.currentUser.areaDict
-        if let student = User.currentUser.student {
-            if let favCourses = student.favoriteCourses  {
-                self.courseDict = [:]
-                for course in favCourses {
-                    
-                    if let favCourse = course as? FavoriteCourse, let area = favCourse.name, let units =  favCourse.numOfUnits, let unitsCount =  Int(units){
-                        
-                        if self.courseDict?[area] != nil {
-                            self.courseDict?[area]! += unitsCount
-                        }else{
-                            self.courseDict?[area] = unitsCount
-                        }
-                    }
-                }// end for
-            }
+        if let areasProgress = User.currentUser.getAreasCompletetionProgress() {
             
-            var total = 0
-            for key in self.courseDict!.keys {
-                total += self.courseDict![key]!
-            }
-            self.total_units.text = "\(total)"
+            self.total_units.text = "\(User.currentUser.totalUnitsCompleted)"
             
-        }// end if let student
-        
-        if let keys = self.courseDict?.keys {
-            
-            for key in keys{
-                
-                if (self.courseDict?[key])! >= (self.areaDict?[key])! {
-                    switch key {
-                    case "Area 1":
-                        self.area1Label.backgroundColor = UIColor.orange
-                    case "Area 2":
-                        self.area2Label.backgroundColor = UIColor.orange
-                    case "Area 3":
-                        self.area3Label.backgroundColor = UIColor.orange
-                    case "Area 4":
-                        self.area4Label.backgroundColor = UIColor.orange
-                    case "Area 5":
-                        self.area5Label.backgroundColor = UIColor.orange
-                    case "Area 6":
-                        self.area6Label.backgroundColor = UIColor.orange
-                    default:
-                        Void()
-                    }// end switch
-                }else{
-                    switch key {
-                    case "Area 1":
-                        self.area1Label.backgroundColor = UIColor.lightGray
-                    case "Area 2":
-                        self.area2Label.backgroundColor = UIColor.lightGray
-                    case "Area 3":
-                        self.area3Label.backgroundColor = UIColor.lightGray
-                    case "Area 4":
-                        self.area4Label.backgroundColor = UIColor.lightGray
-                    case "Area 5":
-                        self.area5Label.backgroundColor = UIColor.lightGray
-                    case "Area 6":
-                        self.area6Label.backgroundColor = UIColor.lightGray
-                    default:
-                        Void()
-                    }// end switch
-                }
+            for (key, value) in areasProgress {
+                let color: UIColor = (value >= 100 ? .orange: .lightGray)
+                let text = "\(key)\n\(value)%"
+                switch key {
+                case "Area 1":
+                    self.area1Label.backgroundColor = color
+                    self.area1Label.text = text
+                case "Area 2":
+                    self.area2Label.backgroundColor = color
+                    self.area2Label.text = text
+                case "Area 3":
+                    self.area3Label.backgroundColor = color
+                    self.area3Label.text = text
+                case "Area 4":
+                    self.area4Label.backgroundColor = color
+                    self.area4Label.text = text
+                case "Area 5":
+                    self.area5Label.backgroundColor = color
+                    self.area5Label.text = text
+                case "Area 6":
+                    self.area6Label.backgroundColor = color
+                    self.area6Label.text = text
+                default:
+                    Void()
+                }// end switch
             }// end for
         }// if let keys
     }
