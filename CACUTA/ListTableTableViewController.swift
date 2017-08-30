@@ -50,7 +50,7 @@ class ListTableTableViewController: UITableViewController, UISearchResultsUpdati
         
         self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
         
-        self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: "courses list")
+        self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
         self.fetch(self.fetchedResultsController)
     }
     

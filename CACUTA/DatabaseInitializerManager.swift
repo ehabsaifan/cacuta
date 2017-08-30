@@ -71,6 +71,7 @@ class DatabaseInitializerManager: NSObject {
                     course.code = csv.rows[i][CourseNum]
                     let course_title = csv.rows[i][Name]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
                     course.name = course_title
+                    course.shouldBeDisplayed = true
                     let about = csv.rows[i][Descript]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
                     course.about = about
                     course.numOfUnits = csv.rows[i][Units]
@@ -86,7 +87,6 @@ class DatabaseInitializerManager: NSObject {
     // IMPORT ALL Areas
     private func initAreas(context: NSManagedObjectContext){
         
-        
             if let csv = self.getCSVFile(forResourse: CSVFile.AreasList) {
                 let rowsCount = csv.rows.count
                 
@@ -99,21 +99,6 @@ class DatabaseInitializerManager: NSObject {
                     area.numOfSections = Int32(csv.rows[i][SectionsCount]!)!
                     let notes = csv.rows[i][Note]?.replacingOccurrences(of:"❤️", with: ",", options: .literal, range: nil)
                     area.notes = notes
-                    
-                    let fetchRequest: NSFetchRequest<Course> = Course.fetchRequest()
-                    let areaName = area.name ?? ""
-                    let predicate = NSPredicate(format: "areaName == %@", areaName)
-                    fetchRequest.predicate = predicate
-                    fetchRequest.returnsObjectsAsFaults = false
-                    do {
-                        let courses = try context.fetch(fetchRequest)
-                        for course in courses {
-                            course.area = area
-                        }
-                    }catch let error as NSError {
-                        print("\(error.localizedDescription)")
-                    }
-                    
                 }// end for
                 
                 self.save(context: context)

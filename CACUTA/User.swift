@@ -126,13 +126,4 @@ class User: NSObject {
         self.id = UserDefaults.standard.object(forKey: "user_id") as? String
     }
     
-    // SignUP Message
-    func setUserInfo(_ info: [String:String]) {
-        self.name = info[StdName]
-        self.gpa = info[StdGPA]
-        self.password = info[StdPassword]
-        self.id = info[StdID]
-        self.college = info[StdCollege]
-        self.univChoice = info[StdUnivChoive]
-    }
 }

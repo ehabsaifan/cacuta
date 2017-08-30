@@ -67,14 +67,14 @@ class AreaViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             let sortDescriptor1 = NSSortDescriptor(key: CourseSubArea, ascending: true)
             let sortDescriptor2 = NSSortDescriptor(key: CourseName, ascending: true)
-            let predicate = NSPredicate(format: "%K == %@", CourseArea, areaName)
+            let predicate = NSPredicate(format: "%K == %@ AND %K == %@", CourseArea, areaName, ShouldBeDisplayed, true as CVarArg)
             
             fetchRequest.sortDescriptors = [sortDescriptor1, sortDescriptor2]
             fetchRequest.predicate = predicate
             
             self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
             
-            self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: CourseSubArea, cacheName: "courses list")
+            self.fetchedResultsController = NSFetchedResultsController<Course>(fetchRequest: fetchRequest, managedObjectContext: self.context, sectionNameKeyPath: CourseSubArea, cacheName: nil)
             self.fetch(self.fetchedResultsController)
         }// end if let name
     }

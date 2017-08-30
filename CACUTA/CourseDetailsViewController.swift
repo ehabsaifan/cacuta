@@ -30,21 +30,15 @@ class CourseDetailsViewController: UIViewController {
     internal var area: String?
     internal var subArea: String?
     internal var depart: String?
-    internal var context = {
+    
+    var context = {
         AppDelegate.viewContext
     }()
     
     private var isFavorite = false
     
-    var course: Course? {
-        didSet{
-            if course == nil {
-                self.dismissCard()
-            }
-        }
-    }
-    
-    private var favoriteCourse: FavoriteCourse?
+    var course: Course?
+    internal var favoriteCourse: FavoriteCourse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,23 +56,23 @@ class CourseDetailsViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    internal func updateViewsContent(for Course: Course?) {
+    internal func updateViewsContent(for course: Course?) {
         
-        self.name = self.course?.name
-        self.code = self.course?.code
-        self.descript = self.course?.about
-        self.depart = self.course?.department
-        self.units = self.course?.numOfUnits
-        self.area = self.course?.areaName
-        self.subArea = self.course?.subArea
-        self.college = self.course?.college
+        self.name = course?.name
+        self.code = course?.code
+        self.descript = course?.about
+        self.depart = course?.department
+        self.units = course?.numOfUnits
+        self.area = course?.areaName
+        self.subArea = course?.subArea
+        self.college = course?.college
         
-        self.nameLabel?.text = self.course?.name
-        self.descritLabel?.text = self.course?.about
-        self.departmentLabel?.text = self.course?.department
-        self.codeLabel?.text = self.course?.code
-        self.unitsLabel?.text = self.course?.numOfUnits
-        self.areaLabel?.text = self.course?.areaName
+        self.nameLabel?.text = course?.name
+        self.descritLabel?.text = course?.about
+        self.departmentLabel?.text = course?.department
+        self.codeLabel?.text = course?.code
+        self.unitsLabel?.text = course?.numOfUnits
+        self.areaLabel?.text = course?.areaName
     }
     
     private func checkIfFavoriteCourse(name: String) {
@@ -115,7 +109,7 @@ class CourseDetailsViewController: UIViewController {
                 self.updateButtonTitle(isFavorite: false)
             }else if let course = self.course {
                 let favCourse = FavoriteCourse.createFavoriteCourse(from: course, context: self.context)
-                favCourse.student = student
+                student.addToFavoriteCourses(favCourse)
                 self.updateButtonTitle(isFavorite: true)
             }
             self.save(context: self.context)
@@ -158,7 +152,7 @@ class CourseDetailsViewController: UIViewController {
         })
     }// end done
     
-    private func save(context: NSManagedObjectContext){
+    func save(context: NSManagedObjectContext){
         do {
             try context.save()
         } catch let error as NSError  {

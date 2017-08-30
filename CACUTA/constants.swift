@@ -37,8 +37,8 @@ enum CSVFile: String {
     case AreasList
 }
 
-let SectionsList = ["A","B","C","D","E","F","G","H","I","J","K","L"]
 let AreasList = ["Area 1", "Area 2", "Area 3", "Area 4", "Area 5", "Area 6"]
+
 let CollegesList = ["Allan Hancock College", "Antelope Valley College", "Barstow Butte–Glenn College", "Cabrillo College", "Cerritos College", "Chabot–Las Positas College", "Chaffey College", "Citrus College", "Coast College", "Compton College", "Contra Costa College", "Copper Mountain College", "Desert College", "El Camino College", "Feather River College", "Foothill–De Anza College", "Gavilan College", "Glendale College", "Grossmont–Cuyamaca College", "Yosemite College", "Yuba College", "West Hills College", "West Kern College", "West Valley–Mission"]
 
 
@@ -60,6 +60,8 @@ let PublicAnnouncments = ["Announcments" : [
 
 let GRADE = "grade"
 let IsTaken = "isTaken"
+let IsFavorite = "isFavorite"
+let ShouldBeDisplayed = "shouldBeDisplayed"
 
 let CourseArea = "areaName"
 let CourseCode = "code"

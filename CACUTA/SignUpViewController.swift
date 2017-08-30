@@ -68,10 +68,9 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
             info[StdCollege] = self.selectedColg
             info[StdUnivChoive] = self.selectedUniv
             
-            if self.isStudentExist(id) {
+            if DataManager.isStudentExist(id).success {
                 _ = ProgressHUD.displayMessage("Account already exists! Please sign in", fromView: self.view)
                 delay(1.2, closure: {
-                    
                     let presenter = self.presentingViewController
                     presenter?.dismiss(animated: true, completion: {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "SignInController") as! SignInViewController
@@ -79,10 +78,8 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
                     })// end dismiss
                 })// end delay
             }else {
-                DataManager.initUser(info, completion: { (success, error) in
+                DataManager.initUser(info as [String : AnyObject], completion: { (success, error) in
                     if success {
-                        DataManager.currentManager.isAuthenticated = true
-                        User.currentUser.setUserInfo(info)
                         self.presentingViewController?.dismiss(animated: true, completion: nil)
                     }else if let error = error {
                         _ = ProgressHUD.displayMessage("Could not register: \(error), \(error.userInfo)", fromView: self.view)
@@ -94,21 +91,6 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
             _ = ProgressHUD.displayMessage("Please fill all fields & choose your current college", fromView: self.view)
         }
         
-    }
-    
-    fileprivate func isStudentExist(_ id: String) -> Bool{
-
-        let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-        let predicate = NSPredicate(format: "%K == %@", StdID, id)
-        fetchRequest.predicate = predicate
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        do {
-            return try self.context.fetch(fetchRequest).count > 0
-        }catch let error as NSError {
-            _ = ProgressHUD.displayMessage("Could not register: \(error.localizedDescription)", fromView: self.view)
-            return false
-        }
     }
     
     fileprivate func fetchUniv() {

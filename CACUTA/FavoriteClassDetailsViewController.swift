@@ -13,15 +13,7 @@ let ClassTakenNotification = "ClassTakenNotification"
 class FavoriteClassDetailsViewController: CourseDetailsViewController {
     
     private var isTaken = false
-    
-    var favoriteCourse : FavoriteCourse? {
-        didSet{
-            if favoriteCourse == nil {
-                self.dismissCard()
-            }
-        }
-    }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,28 +30,30 @@ class FavoriteClassDetailsViewController: CourseDetailsViewController {
         self.updateButton(isTaken: !isTaken)
         self.done()
         self.isTaken = !isTaken
+        self.save(context: self.context)
         NotificationCenter.default.post(name: Notification.Name(rawValue: ClassTakenNotification), object: nil)
     }
     
     private func checkIfFavoriteCourseIsTaken() {
         self.isTaken = self.favoriteCourse?.isTaken ?? false
+        self.updateButton(isTaken: isTaken)
     }
 
     fileprivate func updateButton(isTaken: Bool) {
         if isTaken {
-            self.addButtonLabel?.setTitle("Class Taken", for: UIControlState())
-            self.addButtonLabel?.backgroundColor = UIColor.orange
-        }else {
-            self.addButtonLabel?.setTitle("Class Not Taken Yet", for: UIControlState())
+            self.addButtonLabel?.setTitle("Remove from courses completed", for: UIControlState())
             self.addButtonLabel?.backgroundColor = UIColor.red
+        }else {
+            self.addButtonLabel?.setTitle("Add to courses completed", for: UIControlState())
+            self.addButtonLabel?.backgroundColor = UIColor.orange
         }
     }
     
     fileprivate func done(){
         if let isTaken = self.favoriteCourse?.isTaken, isTaken == true {
-            _ = ProgressHUD.displayMessage("Class Taken", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Class Added", fromView: self.view)
         }else{
-            _ = ProgressHUD.displayMessage("Class Not Taken", fromView: self.view)
+            _ = ProgressHUD.displayMessage("Class Removed", fromView: self.view)
         }
         delay(1.2, closure: {
             self.presentingViewController?.dismiss(animated: true, completion: nil)

@@ -47,7 +47,6 @@
 		CE7026331D207480004B572C /* AnnouncmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7026321D207480004B572C /* AnnouncmentViewController.swift */; };
 		CE7026351D2078E3004B572C /* SavedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7026341D2078E3004B572C /* SavedTableViewController.swift */; };
 		CE748BF91F3A812B009AE079 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE748BEF1F3A812B009AE079 /* Course+CoreDataClass.swift */; };
-		CE748BFB1F3A812B009AE079 /* FavoriteCourse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE748BF11F3A812B009AE079 /* FavoriteCourse+CoreDataClass.swift */; };
 		CE748BFD1F3A812B009AE079 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE748BF31F3A812B009AE079 /* Student+CoreDataClass.swift */; };
 		CE748C011F3A812B009AE079 /* University+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE748BF71F3A812B009AE079 /* University+CoreDataClass.swift */; };
 		CE748C051F3A8F8E009AE079 /* Area+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE748C031F3A8F8E009AE079 /* Area+CoreDataClass.swift */; };
@@ -57,6 +56,7 @@
 		CE7CC5911D18BD55001A8BDE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */; };
 		CE7CC5931D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */; };
 		CE7EB06D1D17DE6400082105 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7EB06C1D17DE6400082105 /* StoreKit.framework */; };
+		CE9431EE1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9431EC1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,7 +126,6 @@
 		CE7026321D207480004B572C /* AnnouncmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncmentViewController.swift; sourceTree = "<group>"; };
 		CE7026341D2078E3004B572C /* SavedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedTableViewController.swift; sourceTree = "<group>"; };
 		CE748BEF1F3A812B009AE079 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CE748BF11F3A812B009AE079 /* FavoriteCourse+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteCourse+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE748BF31F3A812B009AE079 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE748BF71F3A812B009AE079 /* University+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "University+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE748C031F3A8F8E009AE079 /* Area+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Area+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -136,6 +135,7 @@
 		CE7CC5901D18BD55001A8BDE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteClassDetailsViewController.swift; sourceTree = "<group>"; };
 		CE7EB06C1D17DE6400082105 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		CE9431EC1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteCourse+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CEEEA8421F392B5700B4554C /* CACUTA-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CACUTA-Bridging-Header.h"; sourceTree = "<group>"; };
 		E6327D5F6CF0A3B444D4CF59 /* Pods_CACUTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CACUTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -339,9 +339,9 @@
 		CE72CB401F37F39A00EC4D75 /* CoraData Classes Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE9431EC1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift */,
 				CE748C031F3A8F8E009AE079 /* Area+CoreDataClass.swift */,
 				CE748BEF1F3A812B009AE079 /* Course+CoreDataClass.swift */,
-				CE748BF11F3A812B009AE079 /* FavoriteCourse+CoreDataClass.swift */,
 				CE748BF31F3A812B009AE079 /* Student+CoreDataClass.swift */,
 				CE748BF71F3A812B009AE079 /* University+CoreDataClass.swift */,
 			);
@@ -602,7 +602,6 @@
 				CE4777421D178E3100F4255A /* AreasTableViewController.swift in Sources */,
 				CE748BFD1F3A812B009AE079 /* Student+CoreDataClass.swift in Sources */,
 				CE748BF91F3A812B009AE079 /* Course+CoreDataClass.swift in Sources */,
-				CE748BFB1F3A812B009AE079 /* FavoriteCourse+CoreDataClass.swift in Sources */,
 				CE748C011F3A812B009AE079 /* University+CoreDataClass.swift in Sources */,
 				CE47773F1D178E3100F4255A /* AppDelegate.swift in Sources */,
 				CE47774B1D178E3100F4255A /* DatabaseInitializerManager.swift in Sources */,
@@ -623,6 +622,7 @@
 				CE4777501D178E3100F4255A /* FavoriteCourseTableViewCell.swift in Sources */,
 				CE47773E1D178E3100F4255A /* AboutTableViewController.swift in Sources */,
 				CE47775A1D178E3100F4255A /* UniversityTableViewController.swift in Sources */,
+				CE9431EE1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

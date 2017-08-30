@@ -14,11 +14,11 @@ let AddCoursesToFavoriteNotification = "AddCoursesToFavoriteNotification"
 
 class FavoriteCoursesTableViewController: UITableViewController {
     
-    fileprivate var hud: MBProgressHUD?
+    private var hud: MBProgressHUD?
     
-    private var coursesDict : [Area: [FavoriteCourse]] = [:]{
+    private var favoriteCourses : [String: [FavoriteCourse]] = [:]{
         didSet{
-            if self.coursesDict.count == 0 {
+            if self.favoriteCourses.count == 0 {
                 self.tableView.isScrollEnabled = false
             }else{
                 self.tableView.isScrollEnabled = true
@@ -27,21 +27,11 @@ class FavoriteCoursesTableViewController: UITableViewController {
         }
     }
     
-    private var areaKeys: [Area]{
-        return self.coursesDict.keys.sorted(by: { (area1, area2) -> Bool in
-            if let name1 = area1.name, let name2 = area2.name {
-                return  name1 > name2
-            }
-            return false
-        })
-    }
-    
     var context = {
         AppDelegate.viewContext
     }()
     
-    fileprivate var cousreDeleted: NSManagedObject?
-    //fileprivate var areaDict: [String: Int]?
+    fileprivate var areaDict: [String: Int]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +40,7 @@ class FavoriteCoursesTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 70
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: UserLoggedOutNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
-            self.coursesDict = [:]
+            self.favoriteCourses = [:]
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: ClassTakenNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
@@ -69,118 +59,106 @@ class FavoriteCoursesTableViewController: UITableViewController {
     }
     
     private func updateUI(){
-       
+        
         guard let student = User.currentUser.student, DataManager.currentManager.isAuthenticated else{
-            self.coursesDict = [:]
+            self.favoriteCourses = [:]
             return
         }
         
-        //self.areaDict = Area.getDict(context: self.context)
+        self.areaDict = Area.getDict(context: self.context)
         self.prepareDataDictionary(student: student)
     }
     
     private func prepareDataDictionary(student: Student){
-        self.coursesDict = [:]
+        self.favoriteCourses = [:]
         self.hud = ProgressHUD.displayProgress("Loading", fromView: self.view)
-        if let favCourses = student.favoriteCourses {
+        
+        let sortDescriptor1 = NSSortDescriptor(key: CourseArea, ascending: true)
+        let sortDescriptor2 = NSSortDescriptor(key: CourseSubArea, ascending: true)
+        let sortDescriptor3 = NSSortDescriptor(key: CourseName, ascending: true)
+        
+        if let favCourses =  student.favoriteCourses?.sortedArray(using: [sortDescriptor1, sortDescriptor2, sortDescriptor3]) {
             for course in favCourses {
-                if let favCourse = course as? FavoriteCourse, let area = favCourse.area {
-                    if var areaList = self.coursesDict[area] {
-                        areaList.append(favCourse)
+                if let favCourse = course as? FavoriteCourse, let areaName = favCourse.areaName{
+                    
+                    if self.favoriteCourses[areaName] != nil {
+                        self.favoriteCourses[areaName]?.append(favCourse)
                     }else{
-                        self.coursesDict[area] = [favCourse]
+                        self.favoriteCourses[areaName] = [favCourse]
                     }
                 }
             }// end for
         }
         self.hud?.hide(animated: true)
     }
-
+    
     @IBAction func addCourses(_ sender: AnyObject) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: AddCoursesToFavoriteNotification), object: self)
     }
+    
+    private func getHeaderTitle(section: Int) -> NSAttributedString {
+        
+        let key = self.favoriteCourses.keys.sorted()[section]
+        
+        var atr = [NSFontAttributeName: UIFont (name: "Helvetica Neue", size: 14)!]
+        let areaNameString = NSMutableAttributedString(string: "   \(key)", attributes: atr)
+        
+        atr = [NSFontAttributeName: UIFont (name: "Helvetica Neue", size: 12)!]
+        let rest = "    -->   \(self.areaDict?[key] ?? 0) units required"
+        let attrString = NSAttributedString(string: rest, attributes: atr)
+        
+        areaNameString.append(attrString)
+        return areaNameString
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        if self.coursesDict.count > 1 {
-            return self.areaKeys.count
-        }
-        return 1
+        return self.favoriteCourses.keys.count > 1 ? self.favoriteCourses.keys.count : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        if self.areaKeys.count > 0 {
-            if let courses = self.coursesDict[self.areaKeys[section]] {
-                return courses.count
-            }
+        
+        guard self.favoriteCourses.keys.count != 0 else {
             return 1
         }
+        
+        let key = self.favoriteCourses.keys.sorted()[section]
+        if let count = self.favoriteCourses[key]?.count, count > 0 {
+            return count
+        }
+        
         return 1
     }
     
-    //    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        if self.coursesDict.count == 0 {
-    //            return ""
-    //        }
-    //        let keys = self.coursesDict.keys.sort()
-    //
-    //        return keys[section]
-    //    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if self.areaKeys.count > 0 {
-            
-            let area = self.areaKeys[section]
-            let areaNameString = NSMutableAttributedString(string: area.name ?? "")
-            
-            let atr = [NSFontAttributeName: UIFont (name: "Helvetica Neue", size: 12)!]
-            let rest = "    -->   \(area.minRequierdUnits ?? "") units required"
-            let attrString = NSAttributedString(string: rest, attributes: atr)
-            
-            areaNameString.append(attrString)
-            
-            let view = UITableViewHeaderFooterView()
-            view.textLabel?.attributedText = areaNameString
-            view.textLabel?.textColor = UIColor.orange
-            return view
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard self.favoriteCourses.keys.count > 0 else {
+            return nil
         }
-        return nil
+        let text = "\(self.getHeaderTitle(section: section))"
+        return text
     }
     
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if self.coursesDict.keys.count > 0 {
-            
-            let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-            
-            let area = self.areaKeys[section]
-            let areaNameString = NSMutableAttributedString(string: area.name ?? "")
-            
-            let atr = [NSFontAttributeName: UIFont (name: "Helvetica Neue", size: 14)!]
-            let rest = "    -->   \(area.minRequierdUnits ?? "") units required"
-            let attrString = NSAttributedString(string: rest, attributes: atr)
-            
-            
-            areaNameString.append(attrString)
-            
-            header.textLabel?.attributedText = areaNameString
-            header.textLabel?.textColor = UIColor.orange
-        }
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let view = UILabel()
+        view.attributedText = self.getHeaderTitle(section: section)
+        view.textColor = UIColor.orange
+        return view
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if self.coursesDict.count == 0 {
+        if self.favoriteCourses.count == 0 {
             return self.tableView.dequeueReusableCell(withIdentifier: "NullCellIdentifier", for: indexPath)
         }
         
         let reuseIdentifier = "ClassCell"
         let cell = self.tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! FavoriteCourseTableViewCell
         
-        let areaName = self.areaKeys[indexPath.section]
+        let key = self.favoriteCourses.keys.sorted()[indexPath.section]
         
-        if let favCourses = self.coursesDict[areaName] {
+        if let favCourses = self.favoriteCourses[key] {
             let course = favCourses[indexPath.row]
             if let name = course.name, let units = course.numOfUnits{
                 cell.courseName?.text =   "\(name)"
@@ -202,46 +180,52 @@ class FavoriteCoursesTableViewController: UITableViewController {
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        if self.coursesDict.count == 0 {
+        if self.favoriteCourses.count == 0 {
             return false
         }
         return true
-        
     }
     
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            let area = self.areaKeys[indexPath.section]
-            if let courses = self.coursesDict[area]{
-                self.cousreDeleted = courses[indexPath.row]
-                if self.deleteCourse(self.cousreDeleted) {
-                    if self.coursesDict[area]?.count == 1 {
-                        self.coursesDict[area] = nil
-                    }else{
-                        self.coursesDict[area]?.remove(at: indexPath.row)
-                    }
-                    tableView.reloadData()
-                }
-            }
+            self.deleteCourse(indexPath: indexPath)
         }
     }
     
-    fileprivate func deleteCourse(_ course: NSManagedObject?) -> Bool {
-        if let course = course {
-            course.managedObjectContext?.delete(course)
-            do{
-                try course.managedObjectContext?.save()
-                return true
-            } catch let error as NSError  {
-                print("Could not save \(error), \(error.userInfo)")
-                return false
-            }// end catch
+    private func deleteCourse(indexPath: IndexPath) {
+        // Delete the row from the data source
+        let key = self.favoriteCourses.keys.sorted()[indexPath.section]
+        if let cousreToBeDeleted = self.favoriteCourses[key]?[indexPath.row] {
+            if self.successfullyDeleted(cousreToBeDeleted) {
+                self.favoriteCourses[key]?.remove(at: indexPath.row)
+                if self.favoriteCourses[key]?.count == 0 {
+                    self.favoriteCourses[key] = nil
+                }
+                tableView.reloadData()
+            }
         }
-        return false
     }
+
+    private func successfullyDeleted(_ course: FavoriteCourse) -> Bool {
+        self.context.delete(course)
+        do {
+            try self.save(context: self.context)
+            return true
+        }catch{
+            return false
+        }
+    }
+    
+    private func save(context: NSManagedObjectContext) throws{
+        do {
+            try context.save()
+        } catch let error as NSError  {
+            print("Could not save \(error.localizedDescription)")
+            throw error
+        }// end catch
+    }// end save
     
     // MARK: - Navigation
     
@@ -254,9 +238,9 @@ class FavoriteCoursesTableViewController: UITableViewController {
             if let CVC = segue.destination as? FavoriteClassDetailsViewController {
                 if let indexPath = self.tableView.indexPathForSelectedRow {
                     
-                    let area = self.areaKeys[indexPath.section]
+                    let key = self.favoriteCourses.keys.sorted()[indexPath.section]
                     
-                    if let course = self.coursesDict[area]?[indexPath.row] {
+                    if let course = self.favoriteCourses[key]?[indexPath.row] {
                         CVC.favoriteCourse = course
                     }
                 }// end if inedxPath
