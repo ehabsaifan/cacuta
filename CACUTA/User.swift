@@ -23,7 +23,7 @@ class User: NSObject {
     var profileImage : UIImage?
     var univChoice: String?
     var student: Student?
-    var areasCompleted: [String:Int]? = [:]
+    var totalUnitsCompleted = "N/A"
     
     class var currentUser : User {
         struct Static {
@@ -117,20 +117,33 @@ class User: NSObject {
         }
     }
     
-    private func getAreasCompletetionPercentage() {
-        if let favCourses = student.favoriteCourses  {
-            self.areasCompleted = [:]
+    func getAreasCompletetionProgress() -> [String: Int]? {
+        if let favCourses = self.student?.favoriteCourses {
+            var areasCompletionProgress = [String: Int]()
+            //Get number of units taken for each Area
+            var areasUnitsTakenDict = [String: Int]()
+            var sumOfUnitsTaken = 0
             for course in favCourses {
-                if let favCourse = course as? FavoriteCourse, let area = favCourse.name, let units =  favCourse.numOfUnits, let unitsCount =  Int(units){
-                    if self.courseDict?[area] != nil {
-                        self.courseDict?[area]! += unitsCount
+                if let favCourse = course as? FavoriteCourse, let area = favCourse.areaName, let units =  favCourse.numOfUnits, let unitsCount =  Int(units), favCourse.isTaken == true{
+                    if areasUnitsTakenDict[area] != nil {
+                        areasUnitsTakenDict[area]! += unitsCount
                     }else{
-                        self.courseDict?[area] = unitsCount
+                        areasUnitsTakenDict[area] = unitsCount
                     }
+                    sumOfUnitsTaken += unitsCount
                 }
             }// end for
+            
+            self.totalUnitsCompleted = "\(sumOfUnitsTaken)"
+            let areasMinimumUnitsRequiredDict = Area.getDict(context: self.context)
+            
+            for (key, value) in areasUnitsTakenDict {
+                let percentage = (value * 100)/areasMinimumUnitsRequiredDict[key]!
+                areasCompletionProgress[key] = percentage
+            }
+            return areasCompletionProgress
         }
-
+        return nil
     }
     
     fileprivate func save() {
