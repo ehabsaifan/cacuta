@@ -37,17 +37,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
         super.viewDidLoad()
         
         self.setup()
-        // Do any additional setup after loading the view.
-        
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: UserLoggedOutNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
-            self.profileImage.image = UIImage(named: "user")
-            self.nameField.text = "Student"
-            self.gpaField.text = "N/A"
-        }
-    }
-    
-    deinit{
-        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,7 +70,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
             }else{
                 self.profileImage?.image = UIImage(named: "user")
             }
-            
         }
     }
     
@@ -178,7 +166,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
                     self.profileImage?.image = image
                 }//end if
             }
-            
         })
         
         let doneAction = UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .cancel, handler: {
@@ -190,7 +177,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
         actionSheet.addAction(doneAction)
         
         self.present(actionSheet, animated: true, completion: nil)
-        
     }
     
     // Gesture Recognizer func called when press outside textfields
@@ -250,15 +236,5 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIPicker
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedUniv = self.acrons[row]
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

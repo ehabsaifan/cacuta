@@ -62,7 +62,6 @@ class User: NSObject {
     
     func updateUserInfo(name: String?, gpa: Double?, university: String?, image: UIImage?, completion: UpdateResponse) {
         if let id = User.currentUser.id {
-            
             let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
             let predicate = NSPredicate(format: "%K == %@", StdID, id)
             fetchRequest.predicate = predicate
@@ -70,6 +69,11 @@ class User: NSObject {
             
             do{
                 if let student = try self.context.fetch(fetchRequest).first {
+                    student.name = name
+                    student.gpa = gpa ?? 0
+                    student.image = image?.convertToNSData()
+                    student.targetUniversity = university
+                    self.save(context: self.context)
                     self.fetchUserInfo(student)
                     if let completion = completion {
                         completion(true, nil)
@@ -146,6 +150,14 @@ class User: NSObject {
         return nil
     }
     
+    private func save(context: NSManagedObjectContext) {
+        do {
+            try context.save()
+        } catch let error as NSError  {
+            print("Could not save \(error.localizedDescription)")
+        }// end catch
+    }// end save
+
     fileprivate func save() {
         UserDefaults.standard.set(self.id, forKey: "user_id")
         UserDefaults.standard.synchronize()

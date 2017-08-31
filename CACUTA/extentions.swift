@@ -8,10 +8,18 @@
 import UIKit
 
 extension UIView {
-    func makeCircular() {
-        self.layer.borderWidth = 1
+    func makeCircular(withBorader: Bool = true) {
+        let boraderWidth: CGFloat = (withBorader ? 1: 0)
+        self.layer.borderWidth = boraderWidth
         self.layer.borderColor = UIColor.orange.cgColor
         self.layer.cornerRadius = self.frame.height/2
+        self.clipsToBounds = true
+    }
+    
+    func makeCircularEdges(radius: CGFloat = 2) {
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.orange.cgColor
+        self.layer.cornerRadius = radius
         self.clipsToBounds = true
     }
 }

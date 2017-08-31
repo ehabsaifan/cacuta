@@ -17,6 +17,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
     
+    @IBOutlet weak var signupBtn: UIButton!
     private var context = {
         AppDelegate.viewContext
     }()
@@ -43,6 +44,8 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate {
         self.stdIDField.tag = 1
         self.passwordField.tag = 2
         self.nameField.becomeFirstResponder()
+        self.signupBtn.makeCircularEdges()
+        
         self.fetchUniv()
         // Do any additional setup after loading the view.
     }

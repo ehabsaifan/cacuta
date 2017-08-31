@@ -70,12 +70,12 @@ class ProfileViewController: UIViewController {
             if let image = User.currentUser.profileImage {
                 self.profile_image?.image = image
             }
+            
             if let college = User.currentUser.college {
                 self.current_college.text = college
             }
             
             self.updateAreas()
-            
         }
     }
     
@@ -149,15 +149,4 @@ class ProfileViewController: UIViewController {
 
         }
     }
-       
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
