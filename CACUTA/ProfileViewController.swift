@@ -31,12 +31,10 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.profile_image.makeCircular()
+        self.setupViews()
 
-        // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: UserLoggedOutNotification), object: nil, queue: OperationQueue.main) { (NSNotification) in
             self.resetViews()
-            self.resetAreasCompletionProgress()
         }
     }
     
@@ -48,7 +46,6 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.resetViews()
-        self.resetAreasCompletionProgress()
         self.fetchStdInfo()
     }
     
@@ -79,13 +76,28 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func setupViews(){
+        self.area1Label.makeCircularEdges()
+        self.area2Label.makeCircularEdges()
+        self.area3Label.makeCircularEdges()
+        self.area4Label.makeCircularEdges()
+        self.area5Label.makeCircularEdges()
+        self.area6Label.makeCircularEdges()
+        
+        self.university_goal.makeCircularEdges()
+        self.profile_image.makeCircular()
+    }
+    
     private func resetViews(){
+        
         self.profle_name?.text = "Student"
         self.current_gpa?.text = "\(0)"
         self.uniChoice?.text = "TBD"
         self.profile_image?.image = UIImage(named: "user")
         self.total_units?.text = "\(0)"
         self.current_college?.text = "Unkown"
+        
+        self.resetAreasCompletionProgress()
     }
     
     private func resetAreasCompletionProgress(){
