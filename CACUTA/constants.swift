@@ -128,3 +128,4 @@ let STDPORTAL = URL(string: "https://myportal.fhda.edu/cp/home/displaylogin")
 let IGETC = URL(string: "http://www.deanza.edu/faculty/nickeldon/igetc.html")
 let ASSIST = URL(string: "http://www.assist.org/web-assist/welcome.html")
 
+let myOrnageColor = UIColor(colorLiteralRed: 1, green: 150/255, blue: 0, alpha: 0)

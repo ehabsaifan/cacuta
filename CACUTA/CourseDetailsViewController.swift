@@ -54,6 +54,7 @@ class CourseDetailsViewController: UIViewController {
         self.card.layer.cornerRadius = 15.0
         self.card.clipsToBounds = true
         self.navigationController?.isNavigationBarHidden = false
+        self.addButtonLabel.makeCircularEdges()
     }
     
     internal func updateViewsContent(for course: Course?) {

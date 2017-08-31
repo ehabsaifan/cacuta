@@ -144,6 +144,7 @@ class FavoriteCoursesTableViewController: UITableViewController {
         let view = UILabel()
         view.attributedText = self.getHeaderTitle(section: section)
         view.textColor = UIColor.orange
+        view.backgroundColor = UIColor.groupTableViewBackground
         return view
     }
     
