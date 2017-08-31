@@ -15,6 +15,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var stdIDField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
+    @IBOutlet weak var signinBtn: UIButton!
     private var context = {
         AppDelegate.viewContext
     }()
@@ -33,6 +34,7 @@ class SignInViewController: UIViewController {
         self.stdIDField.tag = 0
         self.passwordField.tag = 1
         self.stdIDField.becomeFirstResponder()
+        self.signinBtn.makeCircularEdges()
         
         if let id = id {
             self.stdIDField?.text = id

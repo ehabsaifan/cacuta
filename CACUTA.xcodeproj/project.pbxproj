@@ -57,6 +57,7 @@
 		CE7CC5931D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */; };
 		CE7EB06D1D17DE6400082105 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7EB06C1D17DE6400082105 /* StoreKit.framework */; };
 		CE9431EE1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9431EC1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift */; };
+		CE9431F11F5788F600EA0C48 /* NullTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9431F01F5788F600EA0C48 /* NullTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteClassDetailsViewController.swift; sourceTree = "<group>"; };
 		CE7EB06C1D17DE6400082105 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CE9431EC1F561C7F00EA0C48 /* FavoriteCourse+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteCourse+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CE9431F01F5788F600EA0C48 /* NullTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullTableViewCell.swift; sourceTree = "<group>"; };
 		CEEEA8421F392B5700B4554C /* CACUTA-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CACUTA-Bridging-Header.h"; sourceTree = "<group>"; };
 		E6327D5F6CF0A3B444D4CF59 /* Pods_CACUTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CACUTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				CE4777331D178E3100F4255A /* FavoriteCourseTableViewCell.swift */,
+				CE9431F01F5788F600EA0C48 /* NullTableViewCell.swift */,
 				CE4777321D178E3100F4255A /* FavoriteCoursesTableViewController.swift */,
 				CE7CC5921D1CAB9E001A8BDE /* FavoriteClassDetailsViewController.swift */,
 			);
@@ -600,6 +603,7 @@
 				CE4777571D178E3100F4255A /* UniversitiesCollectionViewController.swift in Sources */,
 				CE4777541D178E3100F4255A /* MoreTableViewController.swift in Sources */,
 				CE4777421D178E3100F4255A /* AreasTableViewController.swift in Sources */,
+				CE9431F11F5788F600EA0C48 /* NullTableViewCell.swift in Sources */,
 				CE748BFD1F3A812B009AE079 /* Student+CoreDataClass.swift in Sources */,
 				CE748BF91F3A812B009AE079 /* Course+CoreDataClass.swift in Sources */,
 				CE748C011F3A812B009AE079 /* University+CoreDataClass.swift in Sources */,
