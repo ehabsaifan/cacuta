@@ -15,11 +15,8 @@ class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         self.setNeedsStatusBarAppearanceUpdate()
-        
-        if DataManager.currentManager.isAuthenticated{
-           
-        }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: AddCoursesToFavoriteNotification), object: nil, queue: OperationQueue.main) {[unowned self] (notification) -> Void in
             self.displayCourses()
@@ -42,11 +39,6 @@ class TabBarViewController: UITabBarController {
         return .lightContent
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     fileprivate func displayCourses() {
         self.selectedIndex = 0
         if let navController = self.selectedViewController as? UINavigationController, let controller = navController.topViewController as? SearchViewController{
@@ -55,12 +47,4 @@ class TabBarViewController: UITabBarController {
         }
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }*/
 }

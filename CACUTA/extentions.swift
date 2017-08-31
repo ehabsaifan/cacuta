@@ -16,11 +16,23 @@ extension UIView {
         self.clipsToBounds = true
     }
     
-    func makeCircularEdges(radius: CGFloat = 2) {
+    func makeCircularEdges(radius: CGFloat = 4) {
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.orange.cgColor
+        self.layer.borderColor = UIColor.white.cgColor
         self.layer.cornerRadius = radius
         self.clipsToBounds = true
+    }
+
+    func fillPercentage(percentage: NSNumber) {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.bounds
+        let colorOrange = UIColor.orange.cgColor
+        let colorLightGray = UIColor.lightGray.cgColor
+        gradient.colors = [colorOrange, colorOrange, colorLightGray, colorLightGray]
+        gradient.startPoint = CGPoint(x: 0, y: 1)
+        gradient.endPoint = CGPoint(x: 0, y: 0)
+        gradient.locations = [0, percentage, percentage, 1]
+        self.layer.insertSublayer(gradient, at: 0)
     }
 }
 

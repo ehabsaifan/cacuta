@@ -121,14 +121,14 @@ class User: NSObject {
         }
     }
     
-    func getAreasCompletetionProgress() -> [String: Int]? {
+    func getAreasCompletetionProgress() -> [String: Double]? {
         if let favCourses = self.student?.favoriteCourses {
-            var areasCompletionProgress = [String: Int]()
+            var areasCompletionProgress = [String: Double]()
             //Get number of units taken for each Area
-            var areasUnitsTakenDict = [String: Int]()
-            var sumOfUnitsTaken = 0
+            var areasUnitsTakenDict = [String: Double]()
+            var sumOfUnitsTaken: Double = 0
             for course in favCourses {
-                if let favCourse = course as? FavoriteCourse, let area = favCourse.areaName, let units =  favCourse.numOfUnits, let unitsCount =  Int(units), favCourse.isTaken == true{
+                if let favCourse = course as? FavoriteCourse, let area = favCourse.areaName, let units =  favCourse.numOfUnits, let unitsCount =  Double(units), favCourse.isTaken == true{
                     if areasUnitsTakenDict[area] != nil {
                         areasUnitsTakenDict[area]! += unitsCount
                     }else{
@@ -142,7 +142,7 @@ class User: NSObject {
             let areasMinimumUnitsRequiredDict = Area.getDict(context: self.context)
             
             for (key, value) in areasUnitsTakenDict {
-                let percentage = (value * 100)/areasMinimumUnitsRequiredDict[key]!
+                let percentage = (value * 100.0)/Double(areasMinimumUnitsRequiredDict[key]!)
                 areasCompletionProgress[key] = percentage
             }
             return areasCompletionProgress
